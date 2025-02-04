@@ -32,10 +32,12 @@ const LeftSide = () => {
   const truncatedAboutText = `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis consequuntur doloribus eius...`;
 
   return (
-    <div className="space-y-4 p-2 md:px-5">
+    <div className="space-y-1 p-2 md:px-5">
       {/* Header Section */}
-      <div className="space-y-1 px-3 md:px-0">
-        <h2 className="text-xl font-extrabold text-start text-gray-800">
+      <div className="space-y-1 mb-3 flex flex-col gap-2 justify-center items-center px-3 md:px-0">
+        <img className="w-24 h-24 rounded-full" src="https://storage.googleapis.com/a1aa/image/-dX2XEKhXEMVjM-6OhpAPOWuC_SOWnpbtNIdubXIkyo.jpg" alt="" />
+
+        <h2 className="text-xl mbold text-start text-gray-800">
           The Child Unplugged
         </h2>
         <div className="flex items-center gap-1 text-sm text-gray-600">
@@ -43,7 +45,7 @@ const LeftSide = () => {
           <strong>4.5</strong>
           <span className="text-sm text-slate-500">(554 ratings)</span>
         </div>
-        <p className="text-[13px] w-full text-gray-500 font-medium">
+        <p className="text-[13px] text-center w-full text-gray-500 font-medium">
           Dubai, United Arab Emirates
         </p>
       </div>
@@ -51,48 +53,47 @@ const LeftSide = () => {
       <div className="space-y-5 hidden md:block">
         {/* Chat Button */}
         <Button
-          className="w-full rounded-3xl h-12 flex items-center justify-center gap-3 border-2"
+          className="w-full bg-green-500 rounded-3xl h-12 flex items-center justify-center gap-3 border-2"
           type="default"
         >
-          <FaWhatsapp className="w-6 h-6 text-green-500" />
-          <span className="text-base font-semibold text-gray-700">Chat to Shop</span>
+          <FaWhatsapp className="w-6 h-6 bg-green-500 text-white" />
+          <span className="text-base font-semibold text-white">Chat to Shop</span>
         </Button>
 
         {/* About Section */}
         <div className="space-y-2">
-          <h3 className="text-[16px] font-semibold text-gray-800 border-b pb-2">
+          <h3 className="text-[16px] msemi text-gray-800 border-b pb-2">
             About Us
           </h3>
           <div className="flex gap-3 items-start">
-            <p className="text-black text-[12px] leading-relaxed">
+            <p className="text-black mreg text-[13px] w-56 leading-relaxed">
               {showAbout ? fullAboutText : truncatedAboutText}
             </p>
             <FaChevronDown
-              onClick={() => setShowAbout(!showAbout)}
-              size={36}
-              className={`cursor-pointer transform transition duration-300 ${showAbout ? "rotate-180" : ""}`}
-            />
+  onClick={() => setShowAbout(!showAbout)}
+  className={`cursor-pointer transform scale-100 text-black transition duration-300 text-[24px] ${showAbout ? "rotate-180" : ""}`}
+/>
           </div>
 
           {/* Social Links */}
           <div className="space-y-3 pt-2">
-            <div className="flex items-center gap-3 text-gray-600 hover:text-blue-500 cursor-pointer">
+            <div className="flex items-center text-[13px] gap-3 text-gray-600 hover:text-blue-500 cursor-pointer">
               <FaInternetExplorer className="w-5 h-5" />
-              <span className="text-sm">www.childunplugged.com</span>
+              <span className="text-[13px] font-bold text-[#000000]">www.childunplugged.com</span>
             </div>
             <div className="flex items-center gap-3 text-gray-600 hover:text-pink-600 cursor-pointer">
               <FaInstagram className="w-5 h-5" />
-              <span className="text-sm">@childunplugged</span>
+              <span className="text-[13px] font-bold text-[#000000]">@childunplugged</span>
             </div>
             <div className="flex items-center gap-3 text-gray-600 hover:text-blue-700 cursor-pointer">
               <FaFacebook className="w-5 h-5" />
-              <span className="text-sm">ChildUnpluggedOfficial</span>
+              <span className="text-[13px] font-bold text-[#000000]">ChildUnpluggedOfficial</span>
             </div>
           </div>
         </div>
 
         <div>
-          <h4 className="flex gap-2 text-[16px]">
+          <h4 className="flex gap-2 text-slate-700 msemi text-[16px]">
             Share this Shop <TbArrowWaveRightDown size={22} />
           </h4>
         </div>
