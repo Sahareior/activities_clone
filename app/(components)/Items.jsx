@@ -63,7 +63,7 @@ const Items = () => {
   const [data,setData] = useState([])
 
   const handleFetch = async()=>{
-    const response = await axios.get("http://localhost:5000/allproducts");
+    const response = await axios.get("https://server-sahareior-sijans-projects-f3bcab8f.vercel.app/allproducts");
     
     setData(response.data)
   }

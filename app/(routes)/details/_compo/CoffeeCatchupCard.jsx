@@ -47,11 +47,11 @@ console.log("aa",navigated)
 <div className="bg-[#FBFBFB] md:max-w-5xl mx-auto">
 <div className="flex flex-col md:flex-row gap-6 md:p-7 rounded-lg">
       {/* Image Section */}
-      <div className="w-full md:w-1/2">
+      <div className="w-full  md:w-1/2">
         <img
           src={item.img}
           alt="Coffee & Catch Up"
-          className="w-full rounded-lg"
+          className="w-full  rounded-lg"
         />
       </div>
 
