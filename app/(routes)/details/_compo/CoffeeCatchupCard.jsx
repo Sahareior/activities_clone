@@ -17,7 +17,7 @@ import Review from "./Review";
 
 
 
-const CoffeeCatchupCard = () => {
+const CoffeeCatchupCard = ({product}) => {
     const [loading, setLoading] = useState(true)
   const [quantity, setQuantity] = useState(1);
      const {clicked,setClicked,navigated} = useAppContext()
@@ -37,6 +37,8 @@ const handleClick = (data) =>{
     setItem(data)
 }
 
+console.log('passed', product)
+
 const addToCart=(data)=>{
   addToDb(data)
   setClicked(!clicked)
@@ -48,18 +50,19 @@ console.log("aa",navigated)
 <div className="flex flex-col md:flex-row gap-6 md:p-7 rounded-lg">
       {/* Image Section */}
       <div className="w-full  md:w-1/2">
-        <img
-          src={item.img}
-          alt="Coffee & Catch Up"
-          className="w-full  rounded-lg"
-        />
+      <img
+  src={product.img}
+  alt="Coffee & Catch Up"
+  className="w-full rounded-lg object-contain max-h-[600px]"
+/>
+
       </div>
 
       {/* Details Section */}
       <div className="w-full md:w-1/2 flex px-3 flex-col gap-8">
-        <h2 className="text-3xl text-black mbold font-bold">{item.title}</h2>
+        <h2 className="text-3xl text-black mbold font-bold">{product.title}</h2>
         <p className="text-2xl text-[#000000] msemi font-semibold">
-      {item.price} TK<span className="text-[11px] text-gray-500">   Including VAT</span>
+      {product.price} TK<span className="text-[11px] text-gray-500">   Including VAT</span>
         </p>
 
         {/* Quantity Selector */}
@@ -80,7 +83,8 @@ console.log("aa",navigated)
                     type="default"
                   >
                     <FaWhatsapp className="w-6 h-6 text-green-500" />
-                    <span className="text-base font-semibold ">Chat to Shop</span>
+                    <span  onClick={() => window.open("https://wa.me/8801726369220", "_blank")}
+                     className="text-base font-semibold ">Chat to Shop</span>
                   </Button>
         </div>
 <div className="space-y-3 mt-3 hidden md:block">

@@ -51,12 +51,14 @@ const LeftSide = () => {
       <div className="space-y-5 hidden md:block">
         {/* Chat Button */}
         <Button
-          className="w-full bg-green-500 rounded-3xl h-12 flex items-center justify-center gap-3 border-2"
-          type="default"
-        >
-          <FaWhatsapp className="w-6 h-6 bg-green-500 text-white" />
-          <span className="text-base font-semibold text-white">Chat to Shop</span>
-        </Button>
+  className="w-full bg-green-500 rounded-3xl h-12 flex items-center justify-center gap-3 border-2"
+  type="default"
+  onClick={() => window.open("https://wa.me/8801726369220", "_blank")}
+>
+  <FaWhatsapp className="w-6 h-6 bg-green-500 text-white" />
+  <span className="text-base font-semibold text-white">Chat to Shop</span>
+</Button>
+
 
         {/* About Section */}
         <div className="space-y-2">
@@ -75,19 +77,24 @@ const LeftSide = () => {
 
           {/* Social Links */}
           <div className="space-y-3 pt-2">
-            <div className="flex items-center text-[13px] gap-3 text-gray-600 hover:text-blue-500 cursor-pointer">
-              <FaInternetExplorer className="w-5 h-5" />
-              <span className="text-[13px] font-bold text-[#000000]">www.childunplugged.com</span>
-            </div>
-            <div className="flex items-center gap-3 text-gray-600 hover:text-pink-600 cursor-pointer">
-              <FaInstagram className="w-5 h-5" />
-              <span className="text-[13px] font-bold text-[#000000]">@childunplugged</span>
-            </div>
-            <div className="flex items-center gap-3 text-gray-600 hover:text-blue-700 cursor-pointer">
-              <FaFacebook className="w-5 h-5" />
-              <span className="text-[13px] font-bold text-[#000000]">ChildUnpluggedOfficial</span>
-            </div>
-          </div>
+  <div className="flex items-center text-[13px] gap-3 text-gray-600 hover:text-blue-500 cursor-pointer">
+    <FaInternetExplorer className="w-5 h-5" />
+    <span className="text-[13px] font-bold text-[#000000]">www.childunplugged.com</span>
+  </div>
+
+  <div className="flex items-center gap-3 text-gray-600 hover:text-pink-600 cursor-pointer">
+    <FaInstagram className="w-5 h-5" />
+    <span className="text-[13px] font-bold text-[#000000]">@childunplugged</span>
+  </div>
+
+  <div className="flex items-center gap-3 text-gray-600 hover:text-blue-700 cursor-pointer">
+    <FaFacebook className="w-5 h-5" />
+    <a href="https://web.facebook.com/profile.php?id=61571994037317" className="text-[13px] font-bold text-[#000000]">
+      ChildUnpluggedOfficial
+    </a>
+  </div>
+</div>
+
         </div>
 
         <div>
