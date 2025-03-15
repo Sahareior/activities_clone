@@ -8,18 +8,40 @@ const AppContext = createContext();
 // Provider component
 export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [cart,setCart] = useState([])
+  const [cart, setCart] = useState([]);
   const [activeTab, setActiveTab] = useState("play");
-const [clicked, setClicked] = useState(false)
+  const [clicked, setClicked] = useState(false);
+  const [navigated, setNavigated] = useState(() => {
+    if (typeof window !== "undefined") {
+      const storedNavigated = localStorage.getItem("navigated-data");
+      return storedNavigated ? JSON.parse(storedNavigated) : {};
+    }
+    return {};
+  });
   
-    useEffect(() => {
-      // Retrieve cart items from localStorage
-      const storedCart = JSON.parse(localStorage.getItem('shopping-cart1')) || [];
-      setCart(storedCart);
-    }, [clicked]); // Update cart when modal opens
+
+  // Load cart from localStorage on mount
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem("shopping-cart1")) || [];
+    setCart(storedCart);
+  }, [clicked]); // Update cart when modal opens
+
+  // Persist `navigated` state in localStorage
+  useEffect(() => {
+    const storedNavigated = localStorage.getItem("navigated-data");
+    if (storedNavigated) {
+      setNavigated(JSON.parse(storedNavigated));
+    }
+  }, []);
 
   return (
-    <AppContext.Provider value={{ user, setUser,clicked,setClicked,cart,setActiveTab,activeTab }}>
+    <AppContext.Provider value={{ 
+      user, setUser, 
+      cart, setCart, 
+      activeTab, setActiveTab, 
+      clicked, setClicked, 
+      navigated, setNavigated 
+    }}>
       {children}
     </AppContext.Provider>
   );

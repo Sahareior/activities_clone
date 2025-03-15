@@ -26,19 +26,19 @@ const CartModal = ({ isModalVisible, handleOk, handleCancel }) => {
   }
   
   // Increase quantity
-  const increaseQty = (id) => {
+  const increaseQty = (_id) => {
     const updatedCart = cartItems.map(item =>
-      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      item._id === _id ? { ...item, quantity: item.quantity + 1 } : item
     );
     setCartItems(updatedCart);
     localStorage.setItem('shopping-cart1', JSON.stringify(updatedCart));
   };
   
   // Decrease quantity (removes item if quantity reaches 0)
-  const decreaseQty = (id) => {
+  const decreaseQty = (_id) => {
     const updatedCart = cartItems
       .map(item =>
-        item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+        item._id === _id ? { ...item, quantity: item.quantity - 1 } : item
       )
       .filter(item => item.quantity > 0); // Remove items with quantity 0
   
@@ -71,20 +71,21 @@ const CartModal = ({ isModalVisible, handleOk, handleCancel }) => {
   <div className="max-h-60 ">
     {cartItems.length > 0 ? (
       cartItems.slice(0, 2).map(item => ( // Display only first 2 items
-        <div key={item.id} className="flex justify-between items-center border-b pb-2 mb-2">
+        <div key={item._id} className="flex justify-between items-center border-b pb-2 mb-2">
           <div>
             <h3 className='text-black mmed text-[13px]'>{item.name}</h3>
             <div className="flex items-center text-black gap-4 my-2">
               <span className="text-lg font-medium">Qty</span>
               <div className="flex items-center border border-gray-300 rounded-full px-3 py-1">
-                <button className="text-xl px-2" onClick={() => decreaseQty(item.id)}>−</button>
+                <button className="text-xl px-2" onClick={() => decreaseQty(item._id)}>−</button>
                 <span className="px-4 text-lg">{item.quantity}</span>
-                <button className="text-xl px-2" onClick={() => increaseQty(item.id)}>+</button>
+                <button className="text-xl px-2" onClick={() => increaseQty(item._id)}>+</button>
               </div>
             </div>
-            <p className="text-gray-500">AED {item.price.toFixed(2)}</p>
+            <p className="text-gray-500"> {Number(item.price).toFixed(2)} TK</p>
+
           </div>
-          <img src={item.image} alt={item.name} className="w-20 h-20 mr-4" />
+          <img src={item.img} alt={item.name} className="w-20 h-20 mr-4" />
         </div>
       ))
     ) : (
@@ -98,12 +99,14 @@ const CartModal = ({ isModalVisible, handleOk, handleCancel }) => {
       </h3>
     <div className='flex justify-between'>
       <h2>Subtotal</h2>
-      <h3>AED {subtotal.toFixed(2)}</h3>
+      <h3> {Number(subtotal).toFixed(2)} TK</h3>
+
     </div>
     <hr />
     <div className='flex justify-between'>
       <h2>Total</h2>
-      <h3>(incl. VAT): AED {total.toFixed(2)}</h3>
+      <h3>(incl. VAT):  {Number(total).toFixed(2)} TK</h3>
+
     </div>
   </div>
 </Modal>

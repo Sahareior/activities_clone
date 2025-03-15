@@ -32,19 +32,20 @@ const DetailsHeader = () => {
       <div className='flex gap-2 justify-between items-center'>
         <div className='flex gap-2 items-center'>
           <img 
+          className='w-24 h-24 rounded-full'
             onClick={() => router.push('/')} 
-            src="https://images.zbooni.com/img-optim/api/v1/image?url=https%3A%2F%2Fdlxl63y8t41yr.cloudfront.net%2Fmedia%2Fbusiness_logos%2FChild_Unplugged_Logo.png&w=96&q=75" 
+            src="/logo.png" 
             alt="" 
           />
           <div className="space-y-1 px-3 md:px-0">
             <h2 className="text-xl font-extrabold text-start text-gray-800">
-              The Child Unplugged
+            Trendora
             </h2>
-            <div className="flex gap-1 text-sm text-gray-600">
+            <div className="flex justify-center items-center  gap-2 text-sm text-gray-600">
               <BiHappyAlt className="text-yellow-500" size={28} />
               <strong>4.5</strong>
               <p className="text-[13px] w-full text-gray-500 font-medium">
-                Dubai, United Arab Emirates
+                Dhaka, Bangladesh
               </p>
             </div>
           </div>

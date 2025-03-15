@@ -44,7 +44,7 @@ const Navigations = () => {
             }`}
             type="primary"
           >
-            Play Sessions
+          3 Pieces
           </Button>
           <Button
             onClick={() => setActiveTab('all')}

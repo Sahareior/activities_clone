@@ -53,11 +53,11 @@ const getShoppingCart = () => {
     return shoppingCart;
 }
 
-function deleteShoppingCart(itemId) {
+function deleteShoppingCart(itemid) {
     let shoppingCart = getShoppingCart();
   
-    if (itemId in shoppingCart) {
-      delete shoppingCart[itemId];
+    if (itemid in shoppingCart) {
+      delete shoppingCart[itemid];
   
       // Convert the modified object back to a string and update local storage
       localStorage.setItem('shopping-cart1', JSON.stringify(shoppingCart));
