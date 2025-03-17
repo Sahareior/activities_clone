@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // output: 'export',
-};
-
-
-export default nextConfig;
+    images: {
+      domains: ["i.ibb.co.com", "i.ibb.co", "dlxl63y8t41yr.cloudfront.net"], // Add all necessary domains here
+    },
+  };
+  
+  export default nextConfig;
+  

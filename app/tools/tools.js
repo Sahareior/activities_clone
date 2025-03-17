@@ -1,4 +1,4 @@
-// http://localhost:5000
+// https://kellas-sahareior-sijans-projects-f3bcab8f.vercel.app/
 const addToDb = (product) => {
     console.log(product);
 
