@@ -52,10 +52,7 @@ const router = useRouter()
         <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 absolute -top-2 -right-2">{cart.length}</span>
         <span className="text-xs mt-1">Cart</span>
       </div>
-      <div onClick={()=> router.push('/profile')} className="flex flex-col items-center">
-        <FaUser size={24} />
-        <span className="text-xs mt-1">Profile</span>
-      </div>
+
       <CartModal isModalVisible={isModalVisible} handleOk={handleOk} handleCancel={handleCancel} />
     </div>
   );

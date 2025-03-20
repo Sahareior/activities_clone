@@ -9,7 +9,7 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
-  const [activeTab, setActiveTab] = useState("play");
+  const [activeTab, setActiveTab] = useState("3-piece");
   const [clicked, setClicked] = useState(false);
   const [navigated, setNavigated] = useState(() => {
     if (typeof window !== "undefined") {

@@ -1,116 +1,114 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
-import { Card, Button } from "antd";
-import { ShoppingCartOutlined, MessageOutlined } from "@ant-design/icons";
-import { 
-    FaFacebook,
-    FaChevronDown, 
-    FaInstagram, 
-    FaInternetExplorer, 
-    FaTwitter, 
-    FaWhatsapp 
-} from "react-icons/fa";
-import OtherItems from "./OtherItems";
+import { Button } from "antd";
+import { FaWhatsapp } from "react-icons/fa";
 import { addToDb } from "@/app/tools/tools";
 import { useAppContext } from "@/app/context/AppContext";
 import Review from "./Review";
-import Image from "next/image"; // If using Next.js
+import Image from "next/image";
 
 const CoffeeCatchupCard = ({ product }) => {
-    const [loading, setLoading] = useState(true);
-    const [quantity, setQuantity] = useState(1);
-    const { clicked, setClicked, navigated } = useAppContext();
-    const [item, setItem] = useState(navigated); 
+  const [loading, setLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
+  const { clicked, setClicked, navigated } = useAppContext();
+  const [item, setItem] = useState(navigated);
 
-    useEffect(() => {
-        setLoading(false);
-    }, []);
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
-    if (loading) {
-        return <p>Loading...</p>;
-    }
+  if (loading) {
+    return <p className="text-center text-lg font-semibold">Loading...</p>;
+  }
 
-    const increaseQty = () => setQuantity(prev => prev + 1);
-    const decreaseQty = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+  const increaseQty = () => setQuantity((prev) => prev + 1);
+  const decreaseQty = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
-    const handleClick = (data) => {
-        setItem(data);
-    }
+  const addToCart = (data) => {
+    addToDb(data);
+    setClicked(!clicked);
+  };
 
-    const addToCart = (data) => {
-        addToDb(data);
-        setClicked(!clicked);
-    }
-
-    return (
-        <div className="bg-[#FBFBFB] md:max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-6 md:p-7 rounded-lg">
-                {/* Image Section */}
-                <div className="w-full md:w-1/2">
-                    <Image
-                        src={product.img}
-                        alt="Coffee & Catch Up"
-                        width={600} // Set a width and height for proper optimization
-                        height={400}
-                        className="w-full rounded-lg object-contain max-h-[600px] lazyload" // Added lazyload for optimization
-                        placeholder="blur" // Adds blur effect on image load
-                        blurDataURL={product.img} // If you have a base64 image as a placeholder
-                    />
-                </div>
-
-                {/* Details Section */}
-                <div className="w-full md:w-1/2 flex px-3 flex-col gap-8">
-                    <h2 className="text-3xl text-black mbold font-bold">{product.title}</h2>
-                    <p className="text-2xl text-[#000000] msemi font-semibold">
-                        {product.price} TK <span className="text-[11px] text-gray-500">Including VAT</span>
-                    </p>
-
-                    {/* Quantity Selector */}
-                    <div className="flex items-center text-black gap-4">
-                        <div className="flex items-center border border-gray-300 rounded-full px-3 py-1">
-                            <button className="text-xl px-2" onClick={decreaseQty}>−</button>
-                            <span className="px-4 text-lg">{quantity}</span>
-                            <button className="text-xl px-2" onClick={increaseQty}>+</button>
-                        </div>
-                        <Button 
-                            onClick={() => addToCart(item)} 
-                            type="primary" 
-                            className="bg-white rounded-3xl text-black border w-36 h-10 border-black">
-                            Add to cart
-                        </Button>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                        <Button
-                            className="w-[200px] my-3 rounded-3xl bg-black text-white h-12 flex items-center justify-center gap-3 border-2"
-                            type="default"
-                        >
-                            <FaWhatsapp className="w-6 h-6 text-green-500" />
-                            <span 
-                                onClick={() => window.open("https://wa.me/8801726369220", "_blank")}
-                                className="text-base font-semibold">
-                                Chat to Shop
-                            </span>
-                        </Button>
-                    </div>
-
-                    <div className="space-y-3 mt-3 hidden md:block">
-                        <p className="text-gray-600 mreg text-sm">
-                            Join a relaxed & informal morning where you can connect & chat with other new mums & babies can play.
-                        </p>
-                        <p className="text-gray-600 mreg text-sm">
-                            The price includes 3hrs of play, your choice of a drink and professional care support.
-                        </p>
-                        <p className="text-gray-600 mreg text-sm">
-                            Flexi drop-in time so you can come when suits you best.
-                        </p>
-                        <p className="text-gray-600 mreg text-sm">The focus is on babies from newborn to 1 year old.</p>
-                    </div>
-                </div>
-            </div>
-            <Review />
+  return (
+    <div className="bg-[#FBFBFB] md:max-w-5xl mx-auto p-3 md:p-8 rounded-lg shadow-md">
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* Image Section */}
+        <div className="w-full md:w-1/2">
+          <Image
+            src={product.img}
+            alt={product.title}
+            width={600}
+            height={400}
+            className="w-full rounded-lg object-cover max-h-[600px]"
+            placeholder="blur"
+            blurDataURL={product.img}
+          />
         </div>
-    );
+
+        {/* Details Section */}
+        <div className="w-full md:w-1/2 flex flex-col gap-6">
+          <h2 className="text-3xl font-bold text-gray-900">{product.title}</h2>
+          <p className="text-2xl font-semibold text-black">
+            {product.price} TK
+            <span className="text-sm text-gray-500"> (Incl. VAT)</span>
+          </p>
+
+          {/* Quantity Selector */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center border border-gray-300 rounded-full px-3 py-1">
+              <button
+                className="text-xl px-3 font-bold hover:text-red-600"
+                onClick={decreaseQty}
+              >
+                −
+              </button>
+              <span className="px-4 text-lg font-medium">{quantity}</span>
+              <button
+                className="text-xl px-3 font-bold hover:text-green-600"
+                onClick={increaseQty}
+              >
+                +
+              </button>
+            </div>
+            <Button
+              onClick={() => addToCart(item)}
+              type="primary"
+              className="bg-black hover:bg-gray-800 text-white rounded-full px-6 py-2 transition-all"
+            >
+              Add to Cart
+            </Button>
+          </div>
+
+          {/* WhatsApp Chat Button */}
+          <Button
+            className="w-full md:w-[200px] rounded-full bg-green-500 text-white h-12 flex items-center justify-center gap-3 hover:bg-green-600 transition-all"
+            type="default"
+            onClick={() => window.open("https://wa.me/8801726369220", "_blank")}
+          >
+            <FaWhatsapp className="w-6 h-6" />
+            <span className="text-base font-semibold">Chat to Shop</span>
+          </Button>
+
+          {/* Description */}
+          <div className="space-y-3 mt-3">
+            <p className="text-gray-600 text-sm">
+              Connect with other new moms in a relaxed & informal setting while babies play.
+            </p>
+            <p className="text-gray-600 text-sm">
+              Price includes 3 hours of play, your choice of a drink, and professional support.
+            </p>
+            <p className="text-gray-600 text-sm">
+              Flexi drop-in time—come whenever suits you best.
+            </p>
+            <p className="text-gray-600 text-sm">
+              Ideal for babies from newborn to 1 year old.
+            </p>
+          </div>
+        </div>
+      </div>
+      <Review />
+    </div>
+  );
 };
 
 export default CoffeeCatchupCard;

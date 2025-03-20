@@ -38,22 +38,22 @@ const Navigations = () => {
       <div className="flex justify-between w-full">
         <div className="flex gap-2">
           <Button
-            onClick={() => setActiveTab('play')}
+            onClick={() => setActiveTab('3-piece')}
             className={`rounded-3xl h-9 text-xs font-extrabold ${
-              activeTab === 'play' ? 'bg-black text-white' : 'bg-slate-200 text-black'
+              activeTab === '3-piece' ? 'bg-black text-white' : 'bg-slate-200 text-black'
             }`}
             type="primary"
           >
           3 Pieces
           </Button>
           <Button
-            onClick={() => setActiveTab('all')}
+            onClick={() => setActiveTab('jeans')}
             className={`rounded-3xl h-9 w-28 text-xs font-extrabold ${
-              activeTab === 'all' ? 'bg-black text-white' : 'bg-slate-200 text-black'
+              activeTab === 'jeans' ? 'bg-black text-white' : 'bg-slate-200 text-black'
             }`}
             type="primary"
           >
-            All Items
+            Jeans Pants
           </Button>
         </div>
 
