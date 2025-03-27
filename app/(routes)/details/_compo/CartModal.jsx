@@ -1,31 +1,25 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Empty } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/app/context/AppContext';
+import { ShoppingCartOutlined, ArrowLeftOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 const CartModal = ({ isModalVisible, handleOk, handleCancel }) => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const {clicked, setClicked} = useAppContext()
-  
+  const { clicked, setClicked } = useAppContext();
+
   useEffect(() => {
-    // Retrieve cart items from localStorage
     const storedCart = JSON.parse(localStorage.getItem('shopping-cart1')) || [];
-    console.log('Cart Items:', storedCart);
     setCartItems(storedCart);
-  }, [isModalVisible,clicked]); // Update cart when modal opens
-  
+  }, [isModalVisible, clicked]);
+
   useEffect(() => {
     setLoading(false);
   }, []);
-  
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-  
-  // Increase quantity
+
   const increaseQty = (_id) => {
     const updatedCart = cartItems.map(item =>
       item._id === _id ? { ...item, quantity: item.quantity + 1 } : item
@@ -33,84 +27,125 @@ const CartModal = ({ isModalVisible, handleOk, handleCancel }) => {
     setCartItems(updatedCart);
     localStorage.setItem('shopping-cart1', JSON.stringify(updatedCart));
   };
-  
-  // Decrease quantity (removes item if quantity reaches 0)
+
   const decreaseQty = (_id) => {
     const updatedCart = cartItems
       .map(item =>
         item._id === _id ? { ...item, quantity: item.quantity - 1 } : item
       )
-      .filter(item => item.quantity > 0); // Remove items with quantity 0
-  
-      setClicked(!clicked)
+      .filter(item => item.quantity > 0);
+
+    setClicked(!clicked);
     setCartItems(updatedCart);
     localStorage.setItem('shopping-cart1', JSON.stringify(updatedCart));
   };
-  
-  // Calculate subtotal
+
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const total = subtotal; // Add VAT calculation if needed
-  
+  const total = subtotal;
+
   return (
-<Modal
-  title="Shopping Cart"
-  open={isModalVisible}
-  onOk={handleOk}
-  onCancel={handleCancel}
-  footer={[
-    <div key={2} className='flex flex-col'>
-      <Button className='bg-white p-7' key="back" onClick={handleCancel}>
-        Browse More Products
-      </Button>,
-      <Button className='bg-black text-white p-7' key="submit" type="primary" onClick={handleOk}>
-        Checkout
-      </Button>
-    </div>
-  ]}
->
-  <div className="max-h-60 ">
-    {cartItems.length > 0 ? (
-      cartItems.slice(0, 2).map(item => ( // Display only first 2 items
-        <div key={item._id} className="flex justify-between items-center border-b pb-2 mb-2">
-          <div>
-            <h3 className='text-black mmed text-[13px]'>{item.name}</h3>
-            <div className="flex items-center text-black gap-4 my-2">
-              <span className="text-lg font-medium">Qty</span>
-              <div className="flex items-center border border-gray-300 rounded-full px-3 py-1">
-                <button className="text-xl px-2" onClick={() => decreaseQty(item._id)}>−</button>
-                <span className="px-4 text-lg">{item.quantity}</span>
-                <button className="text-xl px-2" onClick={() => increaseQty(item._id)}>+</button>
-              </div>
-            </div>
-            <p className="text-gray-500"> {Number(item.price).toFixed(2)} TK</p>
-
-          </div>
-          <img src={item.img} alt={item.name} className="w-20 h-20 mr-4" />
+    <Modal
+      title={
+        <div className="flex items-center gap-2">
+          <ShoppingCartOutlined className="text-blue-600 text-xl" />
+          <h2 className="text-lg font-bold text-gray-800 m-0">Your Shopping Cart</h2>
         </div>
-      ))
-    ) : (
-      <p className="text-center text-gray-500">Your cart is empty.</p>
-    )}
-  </div>
+      }
+      open={isModalVisible}
+      onOk={handleOk}
+      onCancel={handleCancel}
+      footer={null}
+      className="cart-modal"
+      closeIcon={<span className="text-gray-500 hover:text-gray-700">✕</span>}
+    >
+      <div className="max-h-[60vh] overflow-y-auto pr-2">
+        {cartItems.length > 0 ? (
+          <>
+            {cartItems.map(item => (
+              <div 
+                key={item._id} 
+                className="flex justify-between items-center p-3 mb-3 rounded-lg transition-all duration-200 hover:bg-gray-50 group"
+              >
+                <div className="flex gap-4 items-center">
+                  <img 
+                    src={item.img} 
+                    alt={item.name} 
+                    className="w-20 h-20 rounded-lg object-cover border border-gray-200 shadow-sm"
+                  />
+                  <div className="flex flex-col gap-2">
+                    <h3 className='text-gray-800 font-semibold text-base'>{item.name}</h3>
+                    <p className="text-gray-600 text-sm">Price: {Number(item.price).toFixed(2)} TK</p>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center border border-gray-200 rounded-full bg-white shadow-sm">
+                        <Button 
+                          shape="circle" 
+                          size="small"
+                          icon={<MinusOutlined className="text-xs" />}
+                          onClick={() => decreaseQty(item._id)}
+                          className="hover:bg-gray-100 border-none"
+                        />
+                        <span className="px-3 text-gray-700 font-medium">{item.quantity}</span>
+                        <Button 
+                          shape="circle" 
+                          size="small"
+                          icon={<PlusOutlined className="text-xs" />}
+                          onClick={() => increaseQty(item._id)}
+                          className="hover:bg-gray-100 border-none"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <p className="text-gray-700 font-medium text-sm">
+                    {(item.price * item.quantity).toFixed(2)} TK
+                  </p>
+                </div>
+              </div>
+            ))}
+          </>
+        ) : (
+          <Empty
+            image={<ShoppingCartOutlined className="text-4xl text-gray-400" />}
+            imageStyle={{ height: 60 }}
+            description={
+              <span className="text-gray-500">Your cart is empty. Start shopping!</span>
+            }
+            className="py-8"
+          />
+        )}
+      </div>
 
-  <div className="mt-4 text-black text-right">
-      <h3 className="cursor-pointer text-blue-500 hover:underline" onClick={() => router.push('/allcart')}>
-        View All
-      </h3>
-    <div className='flex justify-between'>
-      <h2>Subtotal</h2>
-      <h3> {Number(subtotal).toFixed(2)} TK</h3>
-
-    </div>
-    <hr />
-    <div className='flex justify-between'>
-      <h2>Total</h2>
-      <h3>(incl. VAT):  {Number(total).toFixed(2)} TK</h3>
-
-    </div>
-  </div>
-</Modal>
-
+      {cartItems.length > 0 && (
+        <div className="border-t pt-4 mt-4">
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-gray-600 font-medium">Subtotal:</span>
+            <span className="text-gray-800 font-semibold">{Number(subtotal).toFixed(2)} TK</span>
+          </div>
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-gray-600 font-medium">Total (incl. VAT):</span>
+            <span className="text-blue-600 font-bold text-lg">{Number(total).toFixed(2)} TK</span>
+          </div>
+          <div className="flex flex-col gap-3">
+            <Button
+              type="primary"
+              size="large"
+              onClick={() => router.push('/checkout')}
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold h-12 rounded-lg shadow-md transition-all"
+            >
+              Proceed to Checkout
+            </Button>
+            <Button
+              onClick={handleCancel}
+              className="w-full flex items-center justify-center gap-2 text-gray-600 hover:text-blue-600 font-medium h-10 rounded-lg border border-gray-300 hover:border-blue-500 transition-all"
+            >
+              <ArrowLeftOutlined />
+              Continue Shopping
+            </Button>
+          </div>
+        </div>
+      )}
+    </Modal>
   );
 };
 

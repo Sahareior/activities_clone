@@ -2,7 +2,7 @@ import React from 'react';
 
 const RFooter = () => {
     return (
-        <div className=' max-w-5xl mx-auto bg-white'>
+        <div className=' max-w-5xl mb-24 mx-auto bg-white'>
             <footer >
   <div className='flex flex-col text-slate-500  py-9'>
     <div className='flex justify-center gap-2'>

@@ -24,7 +24,7 @@ const MainBody = () => {
       {/* Banner Section */}
       <div className="relative w-full rounded-t-lg bg-white max-w-5xl">
         <img
-          src="/banner.png"
+          src="/timage.webp"
           alt="Banner"
           className="w-full h-[350px] rounded-b-2xl object-cover "
         />
