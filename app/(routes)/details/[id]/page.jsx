@@ -13,7 +13,7 @@ const Page = () => {
     const handleFetch = async () => {
       try {
         const response = await axios.get(
-          "https://kellas-sahareior-sijans-projects-f3bcab8f.vercel.app/allproducts"
+          "https://server-sijans-projects-f3bcab8f.vercel.app/allproducts"
         );
 
         // Find the product that matches the ID

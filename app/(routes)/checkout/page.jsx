@@ -26,8 +26,8 @@ const Checkout = () => {
   };
 
   return (
-<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12 px-2 sm:px-6 lg:px-8">
-  <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+<div className="min-h-screen  py-12 px-2 sm:px-6 lg:px-8">
+  <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
     <div className="px-8 py-6 bg-gradient-to-r from-blue-600 to-indigo-600">
       <h2 className="text-3xl font-bold text-center text-white mb-2">
         <span className="mr-2">🏠</span>

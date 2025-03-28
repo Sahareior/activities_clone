@@ -20,7 +20,7 @@ const Items = () => {
   }, [setActiveTab, activeTab]);
 
   const handleFetch = async () => {
-    const response = await axios.get("https://kellas-sahareior-sijans-projects-f3bcab8f.vercel.app/allproducts");
+    const response = await axios.get("https://server-sijans-projects-f3bcab8f.vercel.app/allproducts");
     setData(response.data);
   };
 
