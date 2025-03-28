@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, Select, Spin, message } from 'antd';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
+import CryptoJS from 'crypto-js'; // Assuming AES encryption is used
 
 const { Option } = Select;
 
@@ -23,10 +24,28 @@ const Checkout = () => {
   const [divisions, setDivisions] = useState([]);
   const [loadingDivisions, setLoadingDivisions] = useState(true);
   const [loadingDistricts, setLoadingDistricts] = useState(false);
-
+  const [cartItems, setCartItems] = useState([]);
   const searchParams = useSearchParams();
-  const total = searchParams.get('total');
+  const encryptedData = searchParams.get("data");
 
+  // Decryption Function (Assuming AES encryption)
+  useEffect(() => {
+    if (encryptedData) {
+      try {
+        const decryptedBytes = CryptoJS.AES.decrypt(decodeURIComponent(encryptedData), "your-secret-key");
+        const decryptedData = decryptedBytes.toString(CryptoJS.enc.Utf8);
+        setCartItems(JSON.parse(decryptedData));
+      } catch (error) {
+        console.error("Error decrypting cart data:", error);
+      }
+    }
+  }, [encryptedData]);
+
+
+  const newTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  console.log(newTotal)
+
+  
   useEffect(() => {
     const fetchDivisions = async () => {
       try {
@@ -43,7 +62,7 @@ const Checkout = () => {
   }, []);
 
   const handleDivisionChange = async (value) => {
-    form.setFieldsValue({ district: undefined }); // Reset district field
+    form.setFieldsValue({ district: undefined });
 
     const divisionId = divisionMap[value];
     if (!divisionId) return;
@@ -60,6 +79,16 @@ const Checkout = () => {
     }
   };
 
+  const handleSubmit = (values) => {
+    const formData = {
+      ...values,
+      total: total || 0, // Use decrypted total, default to 0 if missing
+    };
+
+    console.log("Final Checkout Data:", formData);
+    // Send to API if needed: axios.post('/api/checkout', formData)
+  };
+
   return (
     <div className="min-h-screen py-12 px-2 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -74,34 +103,20 @@ const Checkout = () => {
         </div>
 
         <div className="px-8 py-10">
-          <Form form={form} layout="vertical" onFinish={(values) => console.log(values)}>
+          <Form form={form} layout="vertical" onFinish={handleSubmit}>
             <div className="space-y-6">
-              {/* Personal Info */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Form.Item
-                  name="name"
-                  label="Full Name"
-                  rules={[{ required: true, message: 'Please enter your name' }]}
-                >
+                <Form.Item name="name" label="Full Name" rules={[{ required: true, message: 'Please enter your name' }]}>
                   <Input placeholder="John Doe" />
                 </Form.Item>
 
-                <Form.Item
-                  name="phone"
-                  label="Phone Number"
-                  rules={[{ required: true, message: 'Please enter your phone number' }]}
-                >
+                <Form.Item name="phone" label="Phone Number" rules={[{ required: true, message: 'Please enter your phone number' }]}>
                   <Input placeholder="01XXXXXXXXX" />
                 </Form.Item>
               </div>
 
-              {/* Location Section */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Form.Item
-                  name="division"
-                  label="Division"
-                  rules={[{ required: true, message: 'Please select division' }]}
-                >
+                <Form.Item name="division" label="Division" rules={[{ required: true, message: 'Please select division' }]}>
                   <Select
                     placeholder="Select Division"
                     onChange={handleDivisionChange}
@@ -116,11 +131,7 @@ const Checkout = () => {
                   </Select>
                 </Form.Item>
 
-                <Form.Item
-                  name="district"
-                  label="District"
-                  rules={[{ required: true, message: 'Please select district' }]}
-                >
+                <Form.Item name="district" label="District" rules={[{ required: true, message: 'Please select district' }]}>
                   <Select
                     placeholder="Select District"
                     loading={loadingDistricts}
@@ -136,18 +147,12 @@ const Checkout = () => {
                 </Form.Item>
               </div>
 
-              {/* Address */}
-              <Form.Item
-                name="address"
-                label="Home Address"
-                rules={[{ required: true, message: 'Please enter your home address' }]}
-              >
+              <Form.Item name="address" label="Home Address" rules={[{ required: true, message: 'Please enter your home address' }]}>
                 <Input.TextArea rows={4} placeholder="House #12, Road #5, Dhanmondi R/A, Dhaka" />
               </Form.Item>
 
-              {/* Submit */}
               <Form.Item>
-                <Button type="primary" htmlType="submit" className="w-full">
+                <Button type="primary" htmlType="submit" className="w-52 mx-auto flex justify-center items-center">
                   Complete Checkout →
                 </Button>
               </Form.Item>

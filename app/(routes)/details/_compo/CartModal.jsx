@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Empty } from 'antd';
+import CryptoJS from "crypto-js";
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/app/context/AppContext';
 import { ShoppingCartOutlined, ArrowLeftOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
@@ -9,6 +10,7 @@ const CartModal = ({ isModalVisible, handleOk, handleCancel }) => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [totalPrice,setTotalPrice] = useState(null)
   const { clicked, setClicked } = useAppContext();
 
   useEffect(() => {
@@ -19,6 +21,23 @@ const CartModal = ({ isModalVisible, handleOk, handleCancel }) => {
   useEffect(() => {
     setLoading(false);
   }, []);
+
+  useEffect(() => {
+    const newTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    setTotalPrice(newTotal);
+  }, [cartItems]);
+  
+
+  const handleCheckout = () => {
+    const cartData = JSON.stringify(cartItems);
+  
+    // Encrypt cart data
+    const encryptedData = CryptoJS.AES.encrypt(cartData, "your-secret-key").toString();
+  
+    // Redirect with encrypted query parameter
+    router.push(`/checkout?data=${encodeURIComponent(encryptedData)}`);
+    handleCancel(); // Close the modal
+  };
 
   const increaseQty = (_id) => {
     const updatedCart = cartItems.map(item =>
@@ -98,6 +117,7 @@ const CartModal = ({ isModalVisible, handleOk, handleCancel }) => {
                 </div>
                 <div className="flex flex-col items-end">
                   <p className="text-gray-700 font-medium text-sm">
+                  
                     {(item.price * item.quantity).toFixed(2)} TK
                   </p>
                 </div>
@@ -130,14 +150,11 @@ const CartModal = ({ isModalVisible, handleOk, handleCancel }) => {
           <Button
   type="primary"
   size="large"
-  onClick={() => {
-    router.push(`/checkout?total=${total.toFixed(2)}`);
-    handleCancel(); // Close the modal
-  }}
+  onClick={handleCheckout}
   className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold h-12 rounded-lg shadow-md transition-all"
 >
   Proceed to Checkout
-</Button>
+</Button>;
 
             <Button
               onClick={handleCancel}
