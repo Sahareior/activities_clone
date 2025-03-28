@@ -24,6 +24,7 @@ const Checkout = () => {
   const [divisions, setDivisions] = useState([]);
   const [loadingDivisions, setLoadingDivisions] = useState(true);
   const [loadingDistricts, setLoadingDistricts] = useState(false);
+  const [loading,setLoading] = useState(true)
   const [cartItems, setCartItems] = useState([]);
   const searchParams = useSearchParams();
   const encryptedData = searchParams.get("data");
@@ -47,6 +48,7 @@ const Checkout = () => {
 
   
   useEffect(() => {
+    setLoading(false)
     const fetchDivisions = async () => {
       try {
         const response = await axios.get('https://bdapi.vercel.app/api/v.1/division');
@@ -82,19 +84,43 @@ const Checkout = () => {
   const handleSubmit = (values) => {
     const formData = {
       ...values,
-      total: total || 0, // Use decrypted total, default to 0 if missing
+      total: newTotal || 0, 
+      data: cartItems
     };
+
+
+    fetch('https://server-sijans-projects-f3bcab8f.vercel.app/order', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+    if(result){
+      alert('done')
+      window.location.replace('/');
+      localStorage.clear('shopping-cart1');
+    }
+      });
 
     console.log("Final Checkout Data:", formData);
     // Send to API if needed: axios.post('/api/checkout', formData)
   };
 
+  if(loading){
+    return(
+      <p>Loading.....</p>
+    )
+  }
+
   return (
-    <div className="min-h-screen py-12 px-2 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div className="min-h-screen py-12 md:px-2 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="px-8 py-6 bg-gradient-to-r from-yellow-600 to-indigo-600">
           <h2 className="text-3xl font-bold text-center text-white mb-2">
-            <span className="mr-2">🏠</span>
+            <span className="mr-2"></span>
             Complete Your Order
           </h2>
           <p className="text-center text-blue-100 text-sm">
@@ -106,17 +132,17 @@ const Checkout = () => {
           <Form form={form} layout="vertical" onFinish={handleSubmit}>
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Form.Item name="name" label="Full Name" rules={[{ required: true, message: 'Please enter your name' }]}>
+                <Form.Item className='font-semibold' name="name" label="Full Name" rules={[{ required: true, message: 'Please enter your name' }]}>
                   <Input placeholder="John Doe" />
                 </Form.Item>
 
-                <Form.Item name="phone" label="Phone Number" rules={[{ required: true, message: 'Please enter your phone number' }]}>
+                <Form.Item name="phone" className='font-semibold' label="Phone Number" rules={[{ required: true, message: 'Please enter your phone number' }]}>
                   <Input placeholder="01XXXXXXXXX" />
                 </Form.Item>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Form.Item name="division" label="Division" rules={[{ required: true, message: 'Please select division' }]}>
+                <Form.Item name="division" className='font-semibold' label="Division" rules={[{ required: true, message: 'Please select division' }]}>
                   <Select
                     placeholder="Select Division"
                     onChange={handleDivisionChange}
@@ -131,7 +157,7 @@ const Checkout = () => {
                   </Select>
                 </Form.Item>
 
-                <Form.Item name="district" label="District" rules={[{ required: true, message: 'Please select district' }]}>
+                <Form.Item name="district" className='font-semibold' label="District" rules={[{ required: true, message: 'Please select district' }]}>
                   <Select
                     placeholder="Select District"
                     loading={loadingDistricts}
@@ -147,7 +173,7 @@ const Checkout = () => {
                 </Form.Item>
               </div>
 
-              <Form.Item name="address" label="Home Address" rules={[{ required: true, message: 'Please enter your home address' }]}>
+              <Form.Item name="address" className='font-semibold' label="Home Address" rules={[{ required: true, message: 'Please enter your home address' }]}>
                 <Input.TextArea rows={4} placeholder="House #12, Road #5, Dhanmondi R/A, Dhaka" />
               </Form.Item>
 
