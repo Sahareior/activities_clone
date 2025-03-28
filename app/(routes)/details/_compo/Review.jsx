@@ -1,98 +1,101 @@
 import { useState } from "react";
-import { FaStar } from "react-icons/fa";
+import { Rate, Button, message, Form, Input } from "antd";
+import { MessageOutlined, StarFilled } from "@ant-design/icons";
 
 const Review = () => {
+  const [form] = Form.useForm();
   const [rating, setRating] = useState(0);
-  const [hover, setHover] = useState(0);
-  const [review, setReview] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (rating === 0) {
-      alert("Please select a rating before submitting!");
-      return;
+  const handleSubmit = async (values) => {
+    setSubmitting(true);
+    try {
+      if (rating === 0) {
+        message.warning("Please select a rating before submitting!");
+        return;
+      }
+      
+      console.log("Review Submitted:", { ...values, rating });
+      message.success("Thank you for your review!");
+      form.resetFields();
+      setRating(0);
+    } finally {
+      setSubmitting(false);
     }
-    console.log("Review Submitted:", { rating, review });
-    alert("Thank you for your review!");
-    setRating(0);
-    setReview("");
   };
 
   return (
-    <div className="w-full p-4 mt-4 mx-auto md:p-8 bg-[#FBFBFB] rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <div className="max-w-6xl mt-11 mx-auto p-6 bg-white rounded-2xl -lg  transition-all duration-300">
       <div className="grid md:grid-cols-2 gap-8">
         {/* Reviews Section */}
-        <div className="space-y-4 border-r-2 pr-8 border-gray-100">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Customer Reviews</h2>
-          <div className="flex items-center justify-center h-40 bg-gray-50 rounded-xl">
-            <p className="text-gray-500 text-lg font-medium">No reviews yet</p>
+        <div className="pr-8 border-r border-gray-100">
+          <div className="flex items-center gap-3 mb-6">
+            <MessageOutlined className="text-2xl text-amber-500" />
+            <h2 className="text-2xl font-bold text-gray-800">Customer Reviews</h2>
+          </div>
+          
+          <div className="h-64 flex flex-col items-center justify-center bg-gray-50 rounded-xl p-4">
+  
+            <p className="text-gray-500 text-lg font-medium">Be the first to review this product</p>
           </div>
         </div>
 
         {/* Review Form */}
-        <div className="space-y-6">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Share Your Feedback</h2>
-            <p className="text-sm text-gray-500">
+        <Form form={form} onFinish={handleSubmit} className="space-y-6">
+          <div className="mb-6">
+            <div className="flex items-center gap-3">
+              <MessageOutlined className="text-2xl text-amber-500" />
+              <h2 className="text-2xl font-bold text-gray-800">Share Your Feedback</h2>
+            </div>
+            <p className="text-sm text-gray-500 mt-2">
               Your email address will not be published. Required fields are marked *
             </p>
           </div>
 
           {/* Rating Section */}
-          <div className="space-y-3">
-            <label className="block text-sm font-medium text-gray-700">
-              Rate this product *
-            </label>
-            <div className="flex gap-2">
-              {Array.from({ length: 5 }).map((_, i) => {
-                const ratingValue = i + 1;
-                return (
-                  <label key={ratingValue} className="relative">
-                    <input
-                      type="radio"
-                      className="sr-only"
-                      name="rating"
-                      value={ratingValue}
-                      onClick={() => setRating(ratingValue)}
-                    />
-                    <FaStar
-                      size={28}
-                      className={`cursor-pointer transition-transform duration-150 ${
-                        ratingValue <= (hover || rating)
-                          ? "text-amber-400 scale-110"
-                          : "text-gray-300"
-                      }`}
-                      onMouseEnter={() => setHover(ratingValue)}
-                      onMouseLeave={() => setHover(0)}
-                    />
-                  </label>
-                );
-              })}
+          <Form.Item
+            name="rating"
+            rules={[{ required: true, message: 'Please select a rating!' }]}
+          >
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Rate this product *
+              </label>
+              <Rate
+                className="text-3xl [&>.ant-rate-star]:mr-2"
+                character={<StarFilled />}
+                value={rating}
+                onChange={setRating}
+                style={{ color: '#f59e0b' }}
+              />
             </div>
-          </div>
+          </Form.Item>
 
           {/* Review Textarea */}
-          <div className="space-y-3">
-            <label className="block text-sm font-medium text-gray-700">
-              Your Review *
-            </label>
-            <textarea
-              className="w-full p-4 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all placeholder-gray-400 resize-none"
-              placeholder="Share your experience with this product..."
-              value={review}
-              onChange={(e) => setReview(e.target.value)}
+          <Form.Item
+            name="review"
+            rules={[{ required: true, message: 'Please write your review!' }]}
+          >
+            <Input.TextArea
               rows={5}
+              placeholder="Share your experience with this product..."
+              className="rounded-lg border-gray-200 hover:border-amber-300 focus:border-amber-400 focus:shadow-lg"
+              style={{ resize: 'none' }}
             />
-          </div>
+          </Form.Item>
 
           {/* Submit Button */}
-          <button
-            onClick={handleSubmit}
-            className="w-80 bg-white text-black  py-3 px-6 rounded-lg font-semibold  hover:shadow-lg"
-          >
-            Submit Review
-          </button>
-        </div>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={submitting}
+              className="w-full md:w-48 h-12 rounded-lg font-semibold bg-amber-500 hover:bg-amber-600 border-none text-white shadow-md hover:shadow-lg transition-all"
+            >
+              Submit Review
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
     </div>
   );

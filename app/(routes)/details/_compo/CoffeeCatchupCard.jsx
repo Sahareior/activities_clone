@@ -30,7 +30,7 @@ const CoffeeCatchupCard = ({ product }) => {
   };
 
   return (
-    <div className="bg-[#FBFBFB] md:max-w-5xl mx-auto p-3 md:p-8 rounded-lg shadow-md">
+    <div className="bg-[#FBFBFB] md:max-w-5xl mx-auto p-3 md:p-8 rounded-lg ">
       <div className="flex flex-col md:flex-row gap-6">
         {/* Image Section */}
         <div className="w-full md:w-1/2">
@@ -106,6 +106,7 @@ const CoffeeCatchupCard = ({ product }) => {
           </div>
         </div>
       </div>
+
       <Review />
     </div>
   );
