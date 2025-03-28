@@ -127,14 +127,18 @@ const CartModal = ({ isModalVisible, handleOk, handleCancel }) => {
             <span className="text-blue-600 font-bold text-lg">{Number(total).toFixed(2)} TK</span>
           </div>
           <div className="flex flex-col gap-3">
-            <Button
-              type="primary"
-              size="large"
-              onClick={() => router.push('/checkout')}
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold h-12 rounded-lg shadow-md transition-all"
-            >
-              Proceed to Checkout
-            </Button>
+          <Button
+  type="primary"
+  size="large"
+  onClick={() => {
+    router.push(`/checkout?total=${total.toFixed(2)}`);
+    handleCancel(); // Close the modal
+  }}
+  className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold h-12 rounded-lg shadow-md transition-all"
+>
+  Proceed to Checkout
+</Button>
+
             <Button
               onClick={handleCancel}
               className="w-full flex items-center justify-center gap-2 text-gray-600 hover:text-blue-600 font-medium h-10 rounded-lg border border-gray-300 hover:border-blue-500 transition-all"
