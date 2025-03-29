@@ -1,8 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Button } from "antd";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaCartPlus, FaWhatsapp } from "react-icons/fa";
 import { addToDb } from "@/app/tools/tools";
+import { SnackbarProvider, enqueueSnackbar } from 'notistack'
+import { Spin } from "antd";
 import { useAppContext } from "@/app/context/AppContext";
 import Review from "./Review";
 import Image from "next/image";
@@ -17,10 +19,15 @@ const CoffeeCatchupCard = ({ product }) => {
     setLoading(false);
   }, []);
 
-  if (loading) {
-    return <p className="text-center text-lg font-semibold">Loading...</p>;
-  }
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <Spin size="large" />
+      </div>
+    );
+  }
+  
   const increaseQty = () => setQuantity((prev) => prev + 1);
   const decreaseQty = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
@@ -31,6 +38,7 @@ const CoffeeCatchupCard = ({ product }) => {
 
   return (
     <div className="bg-[#FBFBFB] md:max-w-5xl mx-auto p-3 md:p-8 rounded-lg ">
+       <SnackbarProvider />
       <div className="flex flex-col md:flex-row gap-6">
         {/* Image Section */}
         <div className="w-full md:w-1/2">
@@ -48,14 +56,14 @@ const CoffeeCatchupCard = ({ product }) => {
         {/* Details Section */}
         <div className="w-full md:w-1/2 flex flex-col gap-6">
           <h2 className="text-3xl font-bold text-gray-900">{product.title}</h2>
-          <p className="text-2xl font-semibold text-black">
+          <p className="text-2xl font-semibold text-red-400">
             {product.price} TK
             <span className="text-sm text-gray-500"> (Incl. VAT)</span>
           </p>
 
           {/* Quantity Selector */}
           <div className="flex items-center gap-4">
-            <div className="flex items-center border border-gray-300 rounded-full px-3 py-1">
+            {/* <div className="flex items-center border border-gray-300 rounded-full px-3 py-1">
               <button
                 className="text-xl px-3 font-bold hover:text-red-600"
                 onClick={decreaseQty}
@@ -69,14 +77,23 @@ const CoffeeCatchupCard = ({ product }) => {
               >
                 +
               </button>
-            </div>
-            <Button
-              onClick={() => addToCart(item)}
-              type="primary"
-              className="bg-black hover:bg-gray-800 text-white rounded-full px-6 py-2 transition-all"
-            >
-              Add to Cart
-            </Button>
+            </div> */}
+         <Button
+  onClick={() => {
+    addToCart(item);
+    enqueueSnackbar("Item has been added to the cart", {
+      variant: "success", // success, error, warning, info
+      anchorOrigin: { vertical: "top", horizontal: "right" }, // Position
+      autoHideDuration: 3000, // Hide after 3 seconds
+      style: { backgroundColor: "#1e293b", color: "#ffffff", fontSize: "16px", fontWeight: "bold" },
+    });
+  }}
+  type="primary"
+  className="bg-black hover:bg-gray-800 text-white rounded-full px-6 py-3 transition-all"
+>
+  Add to Cart
+</Button>
+
           </div>
 
           {/* WhatsApp Chat Button */}

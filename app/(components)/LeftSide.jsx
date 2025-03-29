@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from 'antd';
+import { Spin } from "antd";
 import { TbArrowWaveRightDown } from "react-icons/tb";
 import { CiStar } from "react-icons/ci";
 import { BiHappyAlt } from "react-icons/bi";
@@ -23,7 +24,15 @@ const LeftSide = () => {
     setLoading(false);
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <Spin size="large" />
+      </div>
+    );
+  }
+  
 
   // Full and truncated texts for the About Us section.
   const fullAboutText = `Trendora is your go-to destination for stylish and elegant fashion. We offer a premium collection of formal and Punjabi dresses, blending tradition with modern trends. Whether you're looking for timeless classics or contemporary outfits, Trendora ensures top-quality fabrics and exclusive designs to elevate your style.`;

@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Spin } from "antd";
 import { useParams } from "next/navigation";
 import CoffeeCatchupCard from "../_compo/CoffeeCatchupCard";
 
@@ -34,10 +35,15 @@ const Page = () => {
     handleFetch();
   }, [id]);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <Spin size="large" />
+      </div>
+    );
+  }
+  
   if (!product) {
     return <p>Product not found</p>;
   }

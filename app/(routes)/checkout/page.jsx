@@ -3,6 +3,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { Form, Input, Button, Select, Spin, message } from 'antd';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
+import { SnackbarProvider, enqueueSnackbar } from 'notistack'
 import CryptoJS from 'crypto-js'; // Assuming AES encryption is used
 
 const { Option } = Select;
@@ -84,39 +85,75 @@ const CheckoutContent = () => {
   const handleSubmit = (values) => {
     const formData = {
       ...values,
-      total: newTotal || 0, 
-      data: cartItems
+      total: newTotal || 0,
+      data: cartItems,
     };
-
-
-    fetch('https://server-sijans-projects-f3bcab8f.vercel.app/order', {
-      method: 'POST',
+  
+    fetch("https://server-sijans-projects-f3bcab8f.vercel.app/order", {
+      method: "POST",
       headers: {
-        'content-type': 'application/json',
+        "content-type": "application/json",
       },
       body: JSON.stringify(formData),
     })
       .then((res) => res.json())
       .then((result) => {
-    if(result){
-      alert('done')
-      window.location.replace('/');
-      localStorage.clear('shopping-cart1');
-    }
+        if (result?.success) {  // Ensure success response
+          enqueueSnackbar("🎉 Order has been placed successfully!", {
+            variant: "success",
+            anchorOrigin: { vertical: "top", horizontal: "center" },
+            autoHideDuration: 4000,
+            style: {
+              backgroundColor: "#10B981",
+              color: "#ffffff",
+              fontSize: "16px",
+              fontWeight: "bold",
+              borderRadius: "8px",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+            },
+          });
+  
+          // Clear cart and redirect after 3s
+          localStorage.removeItem("shopping-cart1");
+          setTimeout(() => {
+            window.location.replace("/");
+          }, 3000);
+        } else {
+          // Handle failure case
+          throw new Error("Order failed. Please try again.");
+        }
+      })
+      .catch((error) => {
+        enqueueSnackbar(`❌ ${error.message || "Something went wrong!"}`, {
+          variant: "error",
+          anchorOrigin: { vertical: "top", horizontal: "center" },
+          autoHideDuration: 4000,
+          style: {
+            backgroundColor: "#EF4444", // Tailwind red-500
+            color: "#ffffff",
+            fontSize: "16px",
+            fontWeight: "bold",
+            borderRadius: "8px",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+          },
+        });
       });
-
+  
     console.log("Final Checkout Data:", formData);
-    // Send to API if needed: axios.post('/api/checkout', formData)
   };
+  
 
-  if(loading){
-    return(
-      <p>Loading.....</p>
-    )
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <Spin size="large" />
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen py-12 md:px-2 sm:px-6 lg:px-8">
+       <SnackbarProvider />
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="px-8 py-6 bg-gradient-to-r from-yellow-600 to-indigo-600">
           <h2 className="text-3xl font-bold text-center text-white mb-2">

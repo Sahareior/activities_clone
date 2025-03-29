@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react";
+import { Spin } from "antd";
 import { Button, Flex } from 'antd';
 import { IoCartOutline } from "react-icons/io5";
 import { useAppContext } from "../context/AppContext";
@@ -16,9 +17,15 @@ const Navigations = () => {
     setClicked(!clicked);
   }, []);
 
+
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="flex justify-center items-center h-32">
+        <Spin size="large" />
+      </div>
+    );
   }
+  
 
   const showModal = () => {
     setIsModalVisible(true);

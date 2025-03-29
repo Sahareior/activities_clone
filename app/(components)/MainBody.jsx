@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 
+import { Spin } from "antd";
 import Navigations from "./Navigations";
 import LeftSide from "./LeftSide";
 import Items from "./Items";
@@ -14,11 +15,17 @@ const MainBody = () => {
   useEffect(()=>{
     setLoading(false)
   },[])
-  if(loading){
-    return(
-      <p>Loading...</p>
-    )
-  }
+
+
+
+if (loading) {
+  return (
+    <div className="flex justify-center items-center h-32">
+      <Spin size="large" />
+    </div>
+  );
+}
+
   return (
     <div className="flex bg-slate-200 flex-col items-center ">
       {/* Banner Section */}

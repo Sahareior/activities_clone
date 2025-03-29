@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { Spin } from "antd";
 import { useAppContext } from "../context/AppContext";
 import axios from "axios";
 import Image from "next/image";
@@ -47,9 +48,16 @@ const Items = () => {
   };
 
 
-  if(loading){
-    <p>Loading....</p>
+
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <Spin size="large" />
+      </div>
+    );
   }
+  
 
   return (
     <div className="space-y-4">
@@ -65,37 +73,44 @@ const Items = () => {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {finalData.slice(0, visibleItems).map((session) => (
-            // ... rest of your JSX remains the same
-            <div
-              key={session.id}
-              className="flex items- bg-white hover:cursor-pointer rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
-            >
-              <div className="p-4 w-1/2">
-                <h3 className="text-[15px] font-bold text-[#000000] mb-0 leading-[1.2]">
-                  {session.title}
-                </h3>
-                <p className="text-slate-500 msemi mt-1 text-[12px]">
-                  {session.price} TK
-                </p>
-              </div>
-              <div className="w-1/2 h-32">
-                <Image
-                  onClick={() => handleNavigate(`/details/${session._id}`, session)}
-                  src={session.img}
-                  alt={session.title}
-                  width={200}
-                  height={128}
-                  className="w-full h-full object-cover rounded-r-xl"
-                  priority={false}
-                  placeholder="blur"
-                  unoptimized 
-                  blurDataURL="/path-to-low-res-placeholder.jpg"
-                />
-              </div>
-            </div>
-          ))}
+  {loading ? (
+    <div className="flex justify-center items-center col-span-1 md:col-span-2 h-40">
+      <Spin size="large" />
+    </div>
+  ) : finalData.length === 0 ? (
+    <p className="text-center col-span-1 md:col-span-2 text-lg font-semibold">No data available.</p>
+  ) : (
+    finalData.slice(0, visibleItems).map((session) => (
+      <div
+        key={session.id}
+        className="flex items- bg-white hover:cursor-pointer rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+      >
+        <div className="p-4 w-1/2">
+          <h3 className="text-[16px] font-bold text-[#000000] mb-0 leading-[1.2]">
+            {session.title}
+          </h3>
+          <p className="text-slate-600 msemi mt-1 text-[12px]">
+            {session.price} TK
+          </p>
         </div>
+        <div className="w-1/2 h-32">
+          <Image
+            onClick={() => handleNavigate(`/details/${session._id}`, session)}
+            src={session.img}
+            alt={session.title}
+            width={200}
+            height={128}
+            className="w-full h-full object-cover rounded-r-xl"
+            priority={false}
+            placeholder="blur"
+            unoptimized
+            blurDataURL="/path-to-low-res-placeholder.jpg"
+          />
+        </div>
+      </div>
+    ))
+  )}
+</div>;
 
         {visibleItems < finalData.length && (
           <p
