@@ -98,7 +98,7 @@ const CheckoutContent = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        if (result?.success) {  // Ensure success response
+      // Ensure success response
           enqueueSnackbar("🎉 Order has been placed successfully!", {
             variant: "success",
             anchorOrigin: { vertical: "top", horizontal: "center" },
@@ -118,10 +118,7 @@ const CheckoutContent = () => {
           setTimeout(() => {
             window.location.replace("/");
           }, 3000);
-        } else {
-          // Handle failure case
-          throw new Error("Order failed. Please try again.");
-        }
+       
       })
       .catch((error) => {
         enqueueSnackbar(`❌ ${error.message || "Something went wrong!"}`, {
