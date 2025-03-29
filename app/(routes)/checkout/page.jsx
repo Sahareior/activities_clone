@@ -3,7 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, Select, Spin, message } from 'antd';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
-import CryptoJS from 'crypto-js'; // Assuming AES encryption is used
+import CryptoJS from 'crypto-js';
+
+export const metadata = {
+  dynamic: 'force-dynamic', // Ensures Next.js does not try to pre-render
+};
 
 const { Option } = Select;
 
@@ -24,12 +28,12 @@ const Checkout = () => {
   const [divisions, setDivisions] = useState([]);
   const [loadingDivisions, setLoadingDivisions] = useState(true);
   const [loadingDistricts, setLoadingDistricts] = useState(false);
-  const [loading,setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
   const searchParams = useSearchParams();
   const encryptedData = searchParams.get("data");
 
-  // Decryption Function (Assuming AES encryption)
+  // Decryption Function
   useEffect(() => {
     if (encryptedData) {
       try {
@@ -42,13 +46,10 @@ const Checkout = () => {
     }
   }, [encryptedData]);
 
-
   const newTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  console.log(newTotal)
-
   
   useEffect(() => {
-    setLoading(false)
+    setLoading(false);
     const fetchDivisions = async () => {
       try {
         const response = await axios.get('https://bdapi.vercel.app/api/v.1/division');
@@ -88,7 +89,6 @@ const Checkout = () => {
       data: cartItems
     };
 
-
     fetch('https://server-sijans-projects-f3bcab8f.vercel.app/order', {
       method: 'POST',
       headers: {
@@ -98,21 +98,18 @@ const Checkout = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-    if(result){
-      alert('done')
-      window.location.replace('/');
-      localStorage.clear('shopping-cart1');
-    }
+        if(result){
+          alert('Order placed successfully!');
+          window.location.replace('/');
+          localStorage.removeItem('shopping-cart1'); 
+        }
       });
 
     console.log("Final Checkout Data:", formData);
-    // Send to API if needed: axios.post('/api/checkout', formData)
   };
 
   if(loading){
-    return(
-      <p>Loading.....</p>
-    )
+    return <p>Loading.....</p>;
   }
 
   return (
@@ -120,7 +117,6 @@ const Checkout = () => {
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="px-8 py-6 bg-gradient-to-r from-yellow-600 to-indigo-600">
           <h2 className="text-3xl font-bold text-center text-white mb-2">
-            <span className="mr-2"></span>
             Complete Your Order
           </h2>
           <p className="text-center text-blue-100 text-sm">
@@ -147,7 +143,6 @@ const Checkout = () => {
                     placeholder="Select Division"
                     onChange={handleDivisionChange}
                     loading={loadingDivisions}
-                    notFoundContent={loadingDivisions ? <Spin size="small" /> : 'No divisions found'}
                   >
                     {divisions.map((division) => (
                       <Option key={division._id} value={division.name}>
@@ -162,7 +157,6 @@ const Checkout = () => {
                     placeholder="Select District"
                     loading={loadingDistricts}
                     disabled={!districts.length}
-                    notFoundContent={loadingDistricts ? <Spin size="small" /> : 'Select division first'}
                   >
                     {districts.map((district) => (
                       <Option key={district._id} value={district.name}>
