@@ -5,6 +5,10 @@ import { Spin } from "antd";
 import { useAppContext } from "../context/AppContext";
 import axios from "axios";
 import Image from "next/image";
+import CryptoJS from "crypto-js";
+
+
+
 
 const Items = () => {
   const router = useRouter();
@@ -42,12 +46,14 @@ const Items = () => {
     setVisibleItems((prev) => prev + 6);
   };
 
-  const handleNavigate = (path, sess) => {
-    setNavigated(sess);
-    router.push(path);
-  };
+ 
+const handleNavigate = (path, sess) => {
+  const secretKey = "yourSecretKey"; // Use a strong secret key
+  const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(sess), secretKey).toString();
+  const encodedData = encodeURIComponent(encryptedData); // Encode to safely pass in URL
 
-
+  router.push(`${path}?data=${encodedData}`);
+};
 
 
   if (loading) {

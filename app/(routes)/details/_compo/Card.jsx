@@ -7,8 +7,8 @@ const ProductCard = ({ product, handleClick }) => {
       <div className="w-[190px] h-[120px] md:w-full  md:h-[160px] overflow-hidden rounded-lg flex justify-center">
         <img
           onClick={() => handleClick(product)}
-          src={product.imageUrl}
-          alt={product.name}
+          src={product.img}
+          alt={product.title}
           className="w-full h-full object-cover rounded-lg"
         />
       </div>
@@ -16,10 +16,10 @@ const ProductCard = ({ product, handleClick }) => {
       {/* Product Details */}
       <div className="flex flex-col w-1/2 md:w-full justify-center">
         <p className="text-[13px] mreg text-gray-800 leading-tight">
-          {product.name.length > 35 ? product.name.slice(0, 35) + "..." : product.name}
+          {product?.title?.length > 35 ? product?.title?.slice(0, 35) + "..." : product?.title}
         </p>
         <p className="text-[13px] mmed mt-2 font-semibold text-gray-600">
-  {`AED ${Number(product.price || 0).toFixed(2)}`}
+  {`TK ${Number(product?.price || 0).toFixed(2)}`}
 </p>
 
       </div>
