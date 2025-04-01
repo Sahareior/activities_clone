@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios"; // Make sure to import axios
 import ProductCard from "./Card";
 
-const OtherItems = ({ handleClick }) => {
+const OtherItems = ({ handleClick,setProduct }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -34,7 +34,7 @@ const OtherItems = ({ handleClick }) => {
 
       <div className="md:grid grid-cols-6 px-1 gap-3 md:overflow-x-auto">
         {data.map((product) => (
-          <ProductCard key={product.id} handleClick={handleClick} product={product} />
+          <ProductCard key={product.id} handleClick={handleClick} setProduct={setProduct} product={product} />
         ))}
       </div>
     </div>

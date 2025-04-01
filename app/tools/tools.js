@@ -1,6 +1,6 @@
 // https://server-sijans-projects-f3bcab8f.vercel.app/
 const addToDb = (product) => {
-    console.log(product);
+   
 
     let shoppingCart = JSON.parse(localStorage.getItem('shopping-cart1')) || [];
 
@@ -27,7 +27,7 @@ const decrease = id => {
     else {
         const newQuantity = quantity - 1;
         shoppingCart[id] = newQuantity;
-        console.log(newQuantity) 
+      
     }
     localStorage.setItem('shopping-cart1', JSON.stringify(shoppingCart));
     

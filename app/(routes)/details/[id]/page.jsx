@@ -56,7 +56,7 @@ const Page = () => {
     };
 
     handleFetch();
-  }, [id, sessionData]);
+  }, []);
 
   if (loading) {
     return (
@@ -72,7 +72,7 @@ const Page = () => {
 
   return (
     <div>
-      <CoffeeCatchupCard product={product} />
+      <CoffeeCatchupCard product={product} setProduct={setProduct} />
     </div>
   );
 };

@@ -8,12 +8,13 @@ import { Spin } from "antd";
 import { useAppContext } from "@/app/context/AppContext";
 import Review from "./Review";
 import Image from "next/image";
+import OtherItems from "./OtherItems";
 
-const CoffeeCatchupCard = ({ product }) => {
+const CoffeeCatchupCard = ({ product,setProduct }) => {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const { clicked, setClicked, navigated } = useAppContext();
-  const [item, setItem] = useState(navigated);
+  const [item, setItem] = useState(product);
 
   useEffect(() => {
     setLoading(false);
@@ -27,9 +28,7 @@ const CoffeeCatchupCard = ({ product }) => {
       </div>
     );
   }
-  
-  const increaseQty = () => setQuantity((prev) => prev + 1);
-  const decreaseQty = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+
 
   const addToCart = (data) => {
     addToDb(data);
@@ -91,7 +90,7 @@ const CoffeeCatchupCard = ({ product }) => {
   type="primary"
   className="bg-black hover:bg-gray-800 text-white rounded-full px-6 py-3 transition-all"
 >
-  Add to Cart
+ <FaCartPlus /> Add to Cart
 </Button>
 
           </div>
@@ -125,6 +124,8 @@ const CoffeeCatchupCard = ({ product }) => {
       </div>
 
       <Review />
+
+      <OtherItems setProduct={setProduct} />
     </div>
   );
 };

@@ -136,7 +136,7 @@ const CheckoutContent = () => {
         });
       });
   
-    console.log("Final Checkout Data:", formData);
+    
   };
   
 

@@ -15,7 +15,7 @@ const Review = () => {
         return;
       }
       
-      console.log("Review Submitted:", { ...values, rating });
+     
       message.success("Thank you for your review!");
       form.resetFields();
       setRating(0);
@@ -28,13 +28,13 @@ const Review = () => {
     <div className="max-w-6xl mt-11 mx-auto p-6 bg-white rounded-2xl -lg  transition-all duration-300">
       <div className="grid md:grid-cols-2 gap-8">
         {/* Reviews Section */}
-        <div className="pr-8 border-r border-gray-100">
+        <div className=" border-gray-100">
           <div className="flex items-center gap-3 mb-6">
             <MessageOutlined className="text-2xl text-amber-500" />
             <h2 className="text-2xl font-bold text-gray-800">Customer Reviews</h2>
           </div>
           
-          <div className="h-64 flex flex-col items-center justify-center bg-gray-50 rounded-xl p-4">
+          <div className="h-64 flex flex-col items-center justify-center bg-gray-50 rounded-xl p-1">
   
             <p className="text-gray-500 text-lg font-medium">Be the first to review this product</p>
           </div>

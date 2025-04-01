@@ -13,7 +13,7 @@ const CartPage = () => {
   useEffect(() => {
     // Retrieve cart items from localStorage
     const storedCart = JSON.parse(localStorage.getItem("shopping-cart1")) || [];
-    console.log("Loaded cart items:", storedCart);
+   
     setCartItems(storedCart);
    
   }, [clicked]);
