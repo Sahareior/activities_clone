@@ -36,7 +36,7 @@ const router = useRouter()
   };
 
   return (
-    <div className="fixed md:hidden bottom-0 w-full bg-gray-800 text-white flex justify-around py-3 rounded-t-xl shadow-md">
+    <div className="fixed z-50 md:hidden bottom-0 w-full bg-gray-800 text-white flex justify-around py-3 rounded-t-xl shadow-md">
       <div className="flex flex-col items-center">
         <Link href="/">
           <FaHome size={24} />

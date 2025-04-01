@@ -17,9 +17,13 @@ const CoffeeCatchupCard = ({ product,setProduct }) => {
   const [item, setItem] = useState(product);
 
   useEffect(() => {
+
     setLoading(false);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [product]); 
 
   if (loading) {
     return (
@@ -88,7 +92,7 @@ const CoffeeCatchupCard = ({ product,setProduct }) => {
     });
   }}
   type="primary"
-  className="bg-black hover:bg-gray-800 text-white rounded-full px-6 py-3 transition-all"
+     className="w-full md:w-[200px] rounded-full bg-orange-400 text-white h-12 flex items-center justify-center gap-3 hover:bg-green-600 transition-all"
 >
  <FaCartPlus /> Add to Cart
 </Button>
