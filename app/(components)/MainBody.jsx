@@ -74,7 +74,8 @@ const MainBody = () => {
           </div>
 
           {/* Right Side */}
-          <div className="w-full rounded-t-lg relative px-4 py-7 md:pl-10">
+          <div className="w-full rounded-t-lg relative px-4 py-7 md:pl-10 min-h-[600px]">
+
             <Navigations />
             <div className="flex flex-col gap-y-4 md:overflow-y-auto md:h-[calc(1210px-600px)] h-full no-scrollbar">
               <Items />
