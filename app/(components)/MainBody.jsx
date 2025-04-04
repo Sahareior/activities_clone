@@ -17,9 +17,16 @@ const LeftSide = dynamic(() => import("./LeftSide"), {
 });
 
 const Items = dynamic(() => import("./Items"), {
-  loading: () => <div style={{ height: "400px" }} />,
   ssr: false,
+  loading: () => (
+    <div className="space-y-4 animate-pulse">
+      <div className="h-6 bg-gray-300 rounded w-full" />
+      <div className="h-6 bg-gray-300 rounded w-5/6" />
+      <div className="h-6 bg-gray-300 rounded w-2/3" />
+    </div>
+  ),
 });
+
 
 
 const Footer = dynamic(() => import("./Footer"), {
@@ -74,7 +81,8 @@ const MainBody = () => {
           </div>
 
           {/* Right Side */}
-          <div className="w-full rounded-t-lg relative px-4 py-7 md:pl-10 min-h-[600px]">
+          <div className="w-full rounded-t-lg relative px-4 py-7 md:pl-10 min-h-[750px] md:min-h-[650px]">
+
 
             <Navigations />
             <div className="flex flex-col gap-y-4 md:overflow-y-auto md:h-[calc(1210px-600px)] h-full no-scrollbar">
