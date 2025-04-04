@@ -5,19 +5,18 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Spin } from "antd";
 
-// Dynamically import heavy or non-critical components
+// Dynamic Imports with skeletons and layout stability
 const Navigations = dynamic(() => import("./Navigations"), {
-  loading: () => <div>Loading navigation...</div>,
+  loading: () => <div className="h-10 bg-gray-100 rounded animate-pulse" />,
   ssr: false,
 });
 
 const LeftSide = dynamic(() => import("./LeftSide"), {
-  loading: () => <div>Loading sidebar...</div>,
+  loading: () => <div className="h-64 bg-gray-100 rounded animate-pulse" />,
   ssr: false,
 });
 
 const Items = dynamic(() => import("./Items"), {
-  ssr: false,
   loading: () => (
     <div className="space-y-4 animate-pulse">
       <div className="h-6 bg-gray-300 rounded w-full" />
@@ -25,12 +24,11 @@ const Items = dynamic(() => import("./Items"), {
       <div className="h-6 bg-gray-300 rounded w-2/3" />
     </div>
   ),
+  ssr: false,
 });
 
-
-
 const Footer = dynamic(() => import("./Footer"), {
-  loading: () => <div>Loading footer...</div>,
+  loading: () => <div className="h-10 bg-gray-100 rounded animate-pulse" />,
   ssr: false,
 });
 
@@ -42,7 +40,9 @@ const MainBody = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(false);
+    // Simulate hydration/loading delay
+    const timeout = setTimeout(() => setLoading(false), 50);
+    return () => clearTimeout(timeout);
   }, []);
 
   if (loading) {
@@ -57,19 +57,19 @@ const MainBody = () => {
     <div className="flex bg-slate-200 flex-col items-center">
       {/* Banner Section */}
       <div className="relative w-full rounded-t-lg bg-white max-w-5xl">
-      <Image
-  src="/timage.webp"
-  alt="Banner"
-  width={1200}
-  height={350}
-  priority
-  loading="eager"
-  placeholder="blur"
-  blurDataURL="/timage-placeholder.webp"
-  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 1200px"
-  className="w-full h-[350px] rounded-b-2xl object-cover"
-/>
-
+        <Image
+          src="/timage.webp"
+          alt="Banner"
+          width={1200}
+          height={350}
+          priority
+          loading="eager"
+          placeholder="blur"
+          blurDataURL="/timage-placeholder.webp"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 1200px"
+          className="w-full h-[350px] rounded-b-2xl object-cover"
+          style={{ maxHeight: "350px", minHeight: "350px" }}
+        />
 
         {/* MainBody Section */}
         <div className="flex flex-col md:flex-row w-full items-start">
@@ -82,8 +82,6 @@ const MainBody = () => {
 
           {/* Right Side */}
           <div className="w-full rounded-t-lg relative px-4 py-7 md:pl-10 min-h-[750px] md:min-h-[650px]">
-
-
             <Navigations />
             <div className="flex flex-col gap-y-4 md:overflow-y-auto md:h-[calc(1210px-600px)] h-full no-scrollbar">
               <Items />
@@ -92,6 +90,7 @@ const MainBody = () => {
           </div>
         </div>
       </div>
+
       <Float />
     </div>
   );
