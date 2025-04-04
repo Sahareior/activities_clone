@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 const Footer = () => {
@@ -7,7 +8,16 @@ const Footer = () => {
   <div className='flex flex-col text-slate-500  py-9'>
     <div className='flex justify-cente gap-2'>
     <p className='text-[12px]'>This experience is powered by</p>
-        <img src="https://thechildunplugged.zbooni.com/_next/static/media/zbooni-logo-black.ca8163a2.svg" alt="" />
+        {/* <img src="https://thechildunplugged.zbooni.com/_next/static/media/zbooni-logo-black.ca8163a2.svg" alt="" /> */}
+   
+        <Image
+ src="https://thechildunplugged.zbooni.com/_next/static/media/zbooni-logo-black.ca8163a2.svg"
+  alt="Zbooni Logo"
+  width={150} // Set explicit width
+  height={50} // Set explicit height
+  priority
+/>
+
     </div>
 
     <p className='text-[12px] text-cente mt-2'>The next generation platform for personalized commerce.</p>

@@ -17,9 +17,10 @@ const LeftSide = dynamic(() => import("./LeftSide"), {
 });
 
 const Items = dynamic(() => import("./Items"), {
-  loading: () => <div>Loading items...</div>,
+  loading: () => <div style={{ height: "400px" }} />,
   ssr: false,
 });
+
 
 const Footer = dynamic(() => import("./Footer"), {
   loading: () => <div>Loading footer...</div>,
