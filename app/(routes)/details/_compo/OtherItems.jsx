@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios"; // Make sure to import axios
 import ProductCard from "./Card";
 
-const OtherItems = ({ handleClick,setProduct }) => {
+const OtherItems = ({ handleClick,setProduct,cat }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,6 +24,15 @@ const OtherItems = ({ handleClick,setProduct }) => {
     fetchData();
   }, []); // Run once when component mounts
 
+let updatedData;
+  // const updatedData = data.filter(items => items.category === '3-piece')
+  if (cat === '3-piece'){
+    updatedData = data.filter(items => items.category === '3-piece')
+  }
+  if( cat === 'jeans'){
+    updatedData = data.filter(items => items.category === 'jeans')
+  }
+
   if (loading) {
     return <p className="text-center text-gray-500">Loading...</p>;
   }
@@ -33,7 +42,7 @@ const OtherItems = ({ handleClick,setProduct }) => {
       <h2 className="text-xl mx-4 text-black font-bold my-5">View other items</h2>
 
       <div className="md:grid grid-cols-6 px-1 gap-3 md:overflow-x-auto">
-        {data.map((product) => (
+        {updatedData.map((product) => (
           <ProductCard key={product.id} handleClick={handleClick} setProduct={setProduct} product={product} />
         ))}
       </div>

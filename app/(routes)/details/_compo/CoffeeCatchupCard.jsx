@@ -24,7 +24,7 @@ const CoffeeCatchupCard = ({ product,setProduct }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [product]); 
-
+console.log('product', product.category)
   if (loading) {
     return (
       <div className="flex justify-center items-center h-32">
@@ -129,7 +129,7 @@ const CoffeeCatchupCard = ({ product,setProduct }) => {
 
       <Review />
 
-      <OtherItems setProduct={setProduct} />
+      <OtherItems cat ={product.category} setProduct={setProduct} />
     </div>
   );
 };
