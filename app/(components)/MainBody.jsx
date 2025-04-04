@@ -49,14 +49,19 @@ const MainBody = () => {
     <div className="flex bg-slate-200 flex-col items-center">
       {/* Banner Section */}
       <div className="relative w-full rounded-t-lg bg-white max-w-5xl">
-        <Image
-          src="/timage.webp"
-          alt="Banner"
-          width={1200}
-          height={350}
-          priority
-          className="w-full h-[350px] rounded-b-2xl object-cover"
-        />
+      <Image
+  src="/timage.webp"
+  alt="Banner"
+  width={1200}
+  height={350}
+  priority
+  loading="eager"
+  placeholder="blur"
+  blurDataURL="/timage-placeholder.webp"
+  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 1200px"
+  className="w-full h-[350px] rounded-b-2xl object-cover"
+/>
+
 
         {/* MainBody Section */}
         <div className="flex flex-col md:flex-row w-full items-start">
