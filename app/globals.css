@@ -36,44 +36,53 @@ body {
 .montserrat-thin {
   font-family: "Montserrat", sans-serif;
   font-weight: 100;
+  font-display: swap
 }
 
 .montserrat-extralight {
   font-family: "Montserrat", sans-serif;
   font-weight: 200;
+  font-display: swap
 }
 
 .montserrat-light {
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
+  font-display: swap
 }
 
 .mreg {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
+  font-display: swap
 }
 
 .mmed {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
+  font-display: swap
 }
 
 .msemi {
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
+  font-display: swap
 }
 
 .mbold {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
+  font-display: swap
 }
 
 .mex {
   font-family: "Montserrat", sans-serif;
   font-weight: 800;
+  font-display: swap
 }
 
 .montserrat-black {
   font-family: "Montserrat", sans-serif;
   font-weight: 900;
+  font-display: swap
 }

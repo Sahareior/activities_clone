@@ -5,14 +5,18 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Spin } from "antd";
 
-// Dynamic Imports with skeletons and layout stability
+// Dynamic Imports with stable skeletons
 const Navigations = dynamic(() => import("./Navigations"), {
-  loading: () => <div className="h-10 bg-gray-100 rounded animate-pulse" />,
+  loading: () => (
+    <div className="h-10 w-full bg-gray-200 rounded animate-pulse" />
+  ),
   ssr: false,
 });
 
 const LeftSide = dynamic(() => import("./LeftSide"), {
-  loading: () => <div className="h-64 bg-gray-100 rounded animate-pulse" />,
+  loading: () => (
+    <div className="h-[500px] w-full bg-gray-200 rounded animate-pulse" />
+  ),
   ssr: false,
 });
 
@@ -40,38 +44,39 @@ const MainBody = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate hydration/loading delay
-    const timeout = setTimeout(() => setLoading(false), 50);
-    return () => clearTimeout(timeout);
+    // Hydration complete immediately
+    setLoading(false);
   }, []);
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-32">
+      <div className="flex justify-center items-center h-[350px]">
         <Spin size="large" />
       </div>
     );
   }
 
   return (
-    <div className="flex bg-slate-200 flex-col items-center">
-      {/* Banner Section */}
-      <div className="relative w-full rounded-t-lg bg-white max-w-5xl">
-        <Image
-          src="/timage.webp"
-          alt="Banner"
-          width={1200}
-          height={350}
-          priority
-          loading="eager"
-          placeholder="blur"
-          blurDataURL="/timage-placeholder.webp"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 1200px"
-          className="w-full h-[350px] rounded-b-2xl object-cover"
-          style={{ maxHeight: "350px", minHeight: "350px" }}
-        />
+    <div className="flex flex-col items-center bg-slate-200">
+      {/* ✅ Banner Section: Improves LCP & CLS */}
+      <div className="relative w-full bg-white max-w-5xl rounded-t-lg">
+        <div className="relative w-full h-[350px] overflow-hidden rounded-b-2xl">
+          <Image
+            src="/timage.webp"
+            alt="Banner"
+            fill
+            priority
+            loading="eager"
+            placeholder="blur"
+            blurDataURL="/timage-placeholder.webp"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 1200px"
+            className="object-cover"
+          />
+        </div>
+      </div>
 
-        {/* MainBody Section */}
+      {/* ✅ Main Content Section */}
+      <div className="relative w-full max-w-5xl bg-white">
         <div className="flex flex-col md:flex-row w-full items-start">
           {/* Left Side */}
           <div className="flex flex-col w-full md:w-[34vw] rounded-t-lg md:items-start">
@@ -81,7 +86,7 @@ const MainBody = () => {
           </div>
 
           {/* Right Side */}
-          <div className="w-full rounded-t-lg relative px-4 py-7 md:pl-10 min-h-[750px] md:min-h-[650px]">
+          <div className="w-full relative px-4 py-7 md:pl-10 min-h-[750px] md:min-h-[650px]">
             <Navigations />
             <div className="flex flex-col gap-y-4 md:overflow-y-auto md:h-[calc(1210px-600px)] h-full no-scrollbar">
               <Items />
