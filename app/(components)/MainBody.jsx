@@ -90,9 +90,10 @@ const MainBody = () => {
             <div className="flex flex-col gap-y-4">
               {/* Items with Stable Scroll Height */}
              
-<div className="w-full px-4 py-7 md:pl-10 min-h-[100vh] font-sans">
+              <div className="w-full px-4 py-7 md:pl-10 min-h-screen flex flex-col justify-start items-start">
   <Items />
 </div>
+
 
               <Footer />
             </div>
