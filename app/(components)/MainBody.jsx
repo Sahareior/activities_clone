@@ -89,9 +89,11 @@ const MainBody = () => {
             <Navigations />
             <div className="flex flex-col gap-y-4">
               {/* Items with Stable Scroll Height */}
-              <div className="min-h-[60vh]">
-                <Items />
-              </div>
+             
+<div className="w-full px-4 py-7 md:pl-10 min-h-[100vh] font-sans">
+  <Items />
+</div>
+
               <Footer />
             </div>
           </div>
