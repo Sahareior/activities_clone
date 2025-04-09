@@ -5,34 +5,34 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Spin } from "antd";
 
-// Dynamic Imports with stable skeletons
+// Dynamic Imports with dimension-matched skeletons
 const Navigations = dynamic(() => import("./Navigations"), {
   loading: () => (
-    <div className="h-10 w-full bg-gray-200 rounded animate-pulse" />
+    <div className="h-16 w-full bg-gray-200 rounded animate-pulse" /> // Matches actual component height
   ),
   ssr: false,
 });
 
 const LeftSide = dynamic(() => import("./LeftSide"), {
   loading: () => (
-    <div className="h-[500px] w-full bg-gray-200 rounded animate-pulse" />
+    <div className="h-[600px] w-full bg-gray-200 rounded animate-pulse" /> // Adjusted to actual content height
   ),
   ssr: false,
 });
 
 const Items = dynamic(() => import("./Items"), {
   loading: () => (
-    <div className="space-y-4 animate-pulse">
-      <div className="h-6 bg-gray-300 rounded w-full" />
-      <div className="h-6 bg-gray-300 rounded w-5/6" />
-      <div className="h-6 bg-gray-300 rounded w-2/3" />
+    <div className="space-y-4 animate-pulse w-full">
+      {[...Array(5)].map((_, i) => ( // Mimics actual item count
+        <div key={i} className="h-24 bg-gray-200 rounded-lg" /> // Matches item height
+      ))}
     </div>
   ),
   ssr: false,
 });
 
 const Footer = dynamic(() => import("./Footer"), {
-  loading: () => <div className="h-10 bg-gray-100 rounded animate-pulse" />,
+  loading: () => <div className="h-20 bg-gray-100 rounded animate-pulse w-full" />, // Matches footer height
   ssr: false,
 });
 
@@ -44,21 +44,12 @@ const MainBody = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Hydration complete immediately
     setLoading(false);
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-[350px]">
-        <Spin size="large" />
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col items-center bg-slate-200">
-      {/* ✅ Banner Section: Improves LCP & CLS */}
+      {/* Banner Section */}
       <div className="relative w-full bg-white max-w-5xl rounded-t-lg">
         <div className="relative w-full h-[350px] overflow-hidden rounded-b-2xl">
           <Image
@@ -75,7 +66,7 @@ const MainBody = () => {
         </div>
       </div>
 
-      {/* ✅ Main Content Section */}
+      {/* Main Content Section */}
       <div className="relative w-full max-w-5xl bg-white">
         <div className="flex flex-col md:flex-row w-full items-start">
           {/* Left Side */}
@@ -86,9 +77,9 @@ const MainBody = () => {
           </div>
 
           {/* Right Side */}
-          <div className="w-full relative px-4 py-7 md:pl-10 min-h-[750px] md:min-h-[650px]">
+          <div className="w-full relative px-4 py-7 md:pl-10">
             <Navigations />
-            <div className="flex flex-col gap-y-4 md:overflow-y-auto md:h-[calc(1210px-600px)] h-full no-scrollbar">
+            <div className="flex flex-col gap-y-4 mt-4">
               <Items />
               <Footer />
             </div>
