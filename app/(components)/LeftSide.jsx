@@ -86,20 +86,20 @@ const LeftSide = () => {
 
           {/* Social Links */}
           <div className="space-y-3 pt-2">
-  <div className="flex items-center text-[13px] gap-3 text-gray-600 hover:text-blue-500 cursor-pointer">
+  {/* <div className="flex items-center text-[13px] gap-3 text-gray-600 hover:text-blue-500 cursor-pointer">
     <FaInternetExplorer className="w-5 h-5" />
     <span className="text-[13px] font-bold text-[#000000]">www.childunplugged.com</span>
-  </div>
+  </div> */}
 
   <div className="flex items-center gap-3 text-gray-600 hover:text-pink-600 cursor-pointer">
     <FaInstagram className="w-5 h-5" />
-    <span className="text-[13px] font-bold text-[#000000]">@childunplugged</span>
+    <span className="text-[13px] font-bold text-[#000000]">@trendora</span>
   </div>
 
   <div className="flex items-center gap-3 text-gray-600 hover:text-blue-700 cursor-pointer">
     <FaFacebook className="w-5 h-5" />
     <a href="https://web.facebook.com/profile.php?id=61571994037317" className="text-[13px] font-bold text-[#000000]">
-      ChildUnpluggedOfficial
+    Trendora Official
     </a>
   </div>
 </div>

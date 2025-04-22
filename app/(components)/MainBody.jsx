@@ -57,7 +57,7 @@ const MainBody = () => {
   }
 
   return (
-    <div className="flex flex-col items-center bg-slate-200">
+    <div className="flex  flex-col items-center bg-slate-600">
       {/* ✅ Banner Section: Improves LCP & CLS */}
       <div className="relative w-full bg-white max-w-5xl rounded-t-lg">
         <div className="relative w-full h-[350px] overflow-hidden rounded-b-2xl">

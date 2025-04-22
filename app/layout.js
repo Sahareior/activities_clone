@@ -3,6 +3,7 @@ import "./globals.css";
 import Footer from "./(components)/Footer";
 import Float from "./(components)/Float";
 import { AppProvider } from "./context/AppContext";
+import FacebookPixel from "./tools/FacebookPixel";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +27,10 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} bg-slate-200 pb-5 antialiased`}
       > 
      
-     <AppProvider>{children}</AppProvider>
+     <AppProvider>
+      <FacebookPixel />
+      {children}
+      </AppProvider>
 {/* <Float /> */}
       </body>
     </html>
