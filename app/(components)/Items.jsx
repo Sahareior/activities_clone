@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Spin } from "antd";
 import { useAppContext } from "../context/AppContext";
-import axios from "axios";
+
 import Image from "next/image";
 import CryptoJS from "crypto-js";
 
@@ -12,10 +12,9 @@ import CryptoJS from "crypto-js";
 
 const Items = () => {
   const router = useRouter();
-  const { activeTab, setActiveTab, setNavigated } = useAppContext();
-  const [loading, setLoading] = useState(true)
+  const { activeTab, setActiveTab, loading,data } = useAppContext();
   const [visibleItems, setVisibleItems] = useState(8);
-  const [data, setData] = useState([]);
+console.log('data',data)
 
   // Set default tab when component mounts
   useEffect(() => {
@@ -24,20 +23,7 @@ const Items = () => {
     }
   }, [setActiveTab, activeTab]);
 
-  const handleFetch = async () => {
-    try {
-      const response = await axios.get("https://server-sijans-projects-f3bcab8f.vercel.app/allproducts");
-      setData(response.data);
-    } catch (error) {
-      console.error("Failed to fetch data:", error);
-    } finally {
-      setLoading(false); // Ensure loading is turned off after API call completes (success or fail)
-    }
-  };
-  
-  useEffect(() => {
-    handleFetch();
-  }, []);
+
   
 
   // Filter data based on active tab

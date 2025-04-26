@@ -1,6 +1,7 @@
 "use client"; // Required for using state in Next.js App Router
 
 import { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
 
 // Create Context
 const AppContext = createContext();
@@ -10,7 +11,9 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
   const [activeTab, setActiveTab] = useState("3-piece");
+  const [data, setData] = useState([]);
   const [clicked, setClicked] = useState(false);
+  const [loading, setLoading] = useState(true)
   const [navigated, setNavigated] = useState(() => {
     if (typeof window !== "undefined") {
       const storedNavigated = localStorage.getItem("navigated-data");
@@ -18,6 +21,21 @@ export const AppProvider = ({ children }) => {
     }
     return {};
   });
+
+  const handleFetch = async () => {
+    try {
+      const response = await axios.get("https://server-sijans-projects-f3bcab8f.vercel.app/allproducts");
+      setData(response.data);
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    } finally {
+      setLoading(false); // Ensure loading is turned off after API call completes (success or fail)
+    }
+  };
+  
+  useEffect(() => {
+    handleFetch();
+  }, []);
   
 
   // Load cart from localStorage on mount
@@ -40,7 +58,8 @@ export const AppProvider = ({ children }) => {
       cart, setCart, 
       activeTab, setActiveTab, 
       clicked, setClicked, 
-      navigated, setNavigated 
+      navigated, setNavigated,
+      data,setData,loading
     }}>
       {children}
     </AppContext.Provider>
