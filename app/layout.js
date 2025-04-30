@@ -1,8 +1,9 @@
+// app/layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Footer from "./(components)/Footer";
-import Float from "./(components)/Float";
 import { AppProvider } from "./context/AppContext";
+import dynamic from 'next/dynamic';
+import FacebookPixelTracker from "./tools/FacebookPixelTracker";
 
 
 
@@ -26,21 +27,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} bg-slate-200 pb-5 antialiased`}>
         <AppProvider>
-  
           {children}
         </AppProvider>
-
-        {/* Correctly placed noscript fallback */}
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: 'none' }}
-            src="https://www.facebook.com/tr?id=2128380290964389&ev=PageView&noscript=1"
-          />
-        </noscript>
+<FacebookPixelTracker />
       </body>
     </html>
   );
 }
-
