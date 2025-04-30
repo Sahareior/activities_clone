@@ -26,17 +26,20 @@ const Items = () => {
     const scrollToId = sessionStorage.getItem("scrollToId");
     const scrollY = sessionStorage.getItem("scrollY");
 
+    console.log('scrollY', scrollY)
+
     setTimeout(() => {
-      if (scrollToId) {
-        const element = document.getElementById(scrollToId);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
-        } else if (scrollY) {
-          window.scrollTo({ top: parseInt(scrollY), behavior: "smooth" });
-        }
-        sessionStorage.removeItem("scrollToId");
-        sessionStorage.removeItem("scrollY");
-      }
+if (scrollToId) {
+  const element = document.getElementById(scrollToId);
+  if (element) {
+    const yOffset = -80; // Adjust this based on your header height
+    const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({ top: y, behavior: "auto" });
+  } else if (scrollY) {
+    window.scrollTo({ top: parseInt(scrollY), behavior: "smooth" });
+  }
+}
+
     }, 100);
   }, [setActiveTab, activeTab]);
 

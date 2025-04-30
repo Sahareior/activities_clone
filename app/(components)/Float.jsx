@@ -39,16 +39,18 @@ const router = useRouter()
     <div className="fixed z-50 md:hidden bottom-0 w-full bg-gray-800 text-white flex justify-around py-3 rounded-t-xl shadow-md">
       <div className="flex flex-col items-center">
         <Link href="/">
-          <FaHome size={24} />
+          <FaHome size={22} />
           <span className="text-xs mt-1">Home</span>
         </Link>
       </div>
       <div className="flex flex-col items-center">
-        <FaSearch size={24} />
-        <span className="text-xs mt-1">Search</span>
+<Link href='/search'>
+<FaSearch size={22} />
+<span className="text-xs mt-1">Search</span>
+</Link>
       </div>
       <div onClick={showModal} className="flex flex-col items-center relative">
-        <FaCartArrowDown size={24} />
+        <FaCartArrowDown size={22} />
         <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 absolute -top-2 -right-2">{cart.length}</span>
         <span className="text-xs mt-1">Cart</span>
       </div>
