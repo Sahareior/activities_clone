@@ -74,13 +74,13 @@ const LeftSide = () => {
           <h3 className="text-[16px] msemi text-gray-800 border-b pb-2">
             About Us
           </h3>
-          <div className="flex gap-3 items-start">
-            <p className="text-black mreg text-[13px] w-56 leading-relaxed">
+          <div className="flex gap-2">
+            <p className="text-black mreg text-[13px] w-full leading-relaxed">
               {showAbout ? fullAboutText : truncatedAboutText}
             </p>
             <FaChevronDown
   onClick={() => setShowAbout(!showAbout)}
-  className={`cursor-pointer transform scale-100 text-black transition duration-300 text-[24px] ${showAbout ? "rotate-180" : ""}`}
+  className={`cursor-pointer transform scale-100 text-black transition duration-300 text-[20px] ${showAbout ? "rotate-180" : ""}`}
 />
           </div>
 
