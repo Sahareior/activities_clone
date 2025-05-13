@@ -53,7 +53,7 @@ const MainBody = () => {
     <div className="flex flex-col items-center bg-slate-600">
       {/* Stable Banner Section */}
       <div className="relative w-full bg-white max-w-5xl rounded-t-lg">
-        <div className="aspect-[16/6] relative overflow-hidden rounded-b-2xl">
+        <div className="aspect-[16/5.5] relative overflow-hidden rounded-b-2xl">
           <Image
             src="/bannerImagelol.webp"
             alt="Banner"
@@ -79,16 +79,19 @@ const MainBody = () => {
           </div>
 
           {/* Right Side - Fixed height container */}
-          <div 
-            className="w-full relative px-4 py-7 md:pl-10 h-[750px] md:h-[650px] overflow-y-auto"
-            style={{ contain: 'strict' }}
-          >
-            <Navigations />
-            <div className="flex flex-col gap-y-4">
-              <Items />
-              <Footer />
-            </div>
-          </div>
+<div
+  className="w-full relative px-4 pt-7 pb-7 md:pl-10 h-[750px] md:h-[650px] overflow-y-auto bg-white"
+  style={{ contain: 'strict', overscrollBehavior: 'contain' }}
+>
+  <div className="sticky -top-9 pt-6 z-10 bg-white">
+    <Navigations />
+  </div>
+  <div className="flex flex-col gap-y-4">
+    <Items />
+    <Footer />
+  </div>
+</div>
+
         </div>
       </div>
 

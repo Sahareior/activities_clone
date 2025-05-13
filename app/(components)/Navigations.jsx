@@ -40,7 +40,7 @@ const Navigations = () => {
   };
 
   return (
-    <div className=" py-4 border-b-2 sticky top-0 z-10 bg-white">
+    <div className=" py-4 h-20 border-b-2 sticky top-0 z-10 bg-white">
       {/* Right Side (Buttons & Cart) */}
       <div className="flex justify-between w-full">
         <div className="flex gap-2">
