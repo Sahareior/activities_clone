@@ -53,7 +53,7 @@ const MainBody = () => {
     <div className="flex flex-col items-center bg-slate-600">
       {/* Stable Banner Section */}
       <div className="relative w-full bg-white max-w-5xl rounded-t-lg">
-        <div className="md:aspect-[16/5.5] relative overflow-hidden rounded-b-2xl">
+        <div className="aspect-[16/5.5] hidden md:block relative overflow-hidden rounded-b-2xl">
           <Image
             src="/bannerImagelol.webp"
             alt="Banner"
@@ -62,7 +62,7 @@ const MainBody = () => {
             loading="eager"
             placeholder="blur"
             blurDataURL="/timage-placeholder.webp"
-            sizes="(max-width: 568px) "
+            sizes="100vw"
             className="object-cover"
           />
         </div>
@@ -73,7 +73,7 @@ const MainBody = () => {
         <div className="flex flex-col md:flex-row w-full items-start">
           {/* Left Side - Fixed dimensions */}
           <div className="w-full md:w-[34vw] rounded-t-lg">
-            <div className="md:mt-3 w-full md:h-[640px] overflow-hidden">
+            <div className="mt-3 w-full md:h-[640px] overflow-hidden">
               <LeftSide />
             </div>
           </div>
@@ -81,11 +81,8 @@ const MainBody = () => {
           {/* Right Side - Fixed height container */}
 <div
   className="w-full relative px-4 md:pt-7 mt-3 pb-7 md:pl-10 h-[750px] md:h-[600px] bg-white"
- 
 >
-  
-    <Navigations />
-  
+  <Navigations />
   <div className="flex overflow-y-auto flex-col h-full gap-y-4">
     <Items />
     <Footer />
