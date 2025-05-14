@@ -50,9 +50,9 @@ const MainBody = () => {
   }
 
   return (
-    <div className="flex flex-col items-center bg-slate-600">
-      {/* Stable Banner Section */}
-      <div className="relative w-full bg-white max-w-5xl rounded-t-lg">
+   <div className="flex flex-col items-center bg-slate-600">
+      {/* Optimized Banner Section */}
+      <div className="relative w-full bg-white max-w-5xl rounded-t-lg shadow-sm">
         <div className="aspect-[16/5.5] relative overflow-hidden rounded-b-2xl">
           <Image
             src="/bannerImagelol.webp"
@@ -62,33 +62,32 @@ const MainBody = () => {
             loading="eager"
             placeholder="blur"
             blurDataURL="/timage-placeholder.webp"
-            sizes="(max-width: 568px) "
+            sizes="(max-width: 768px) 100vw, 80vw"
             className="object-cover"
           />
         </div>
       </div>
 
-      {/* Stable Main Content */}
+      {/* Performance-optimized Main Content */}
       <div className="relative w-full max-w-5xl bg-white">
-        <div className="flex flex-col md:flex-row w-full items-start">
-          {/* Left Side - Fixed dimensions */}
+        <div className="flex flex-col md:flex-row w-full items-start gap-4">
+          {/* Left Side - Stable Dimensions */}
           <div className="w-full md:w-[34vw] rounded-t-lg">
-            <div className="mt-3 w-full h-[640px] overflow-hidden">
+            <div className="mt-3 w-full md:h-[640px] h-[360px] overflow-hidden">
               <LeftSide />
             </div>
           </div>
 
-          {/* Right Side - Fixed height container */}
-<div className="w-full relative px-4 pt-7 pb-7 md:pl-10 h-[750px] md:h-[650px] overflow-y-auto bg-white">
-  <div className="sticky top-0 pt-2 z-10 bg-white border-b">
-    <Navigations />
-  </div>
-  <div className="flex flex-col gap-y-4 pt-4">
-    <Items />
-    <Footer />
-  </div>
-</div>
-
+          {/* Right Side - Optimized Scroll Container */}
+          <div className="w-full relative px-4 md:pl-8 h-[750px] md:h-[650px] overflow-y-auto bg-white">
+            <div className="sticky top-0 z-10 bg-white pt-3 pb-2 border-b">
+              <Navigations />
+            </div>
+            <div className="flex flex-col gap-y-4 pt-4 px-2">
+              <Items />
+              <Footer className="mt-4" />
+            </div>
+          </div>
         </div>
       </div>
 
