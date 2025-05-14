@@ -73,7 +73,7 @@ const MainBody = () => {
         <div className="flex flex-col md:flex-row w-full items-start gap-4">
           {/* Left Side - Stable Dimensions */}
           <div className="w-full md:w-[34vw] rounded-t-lg">
-            <div className="mt-3 w-full md:h-[640px] h-[360px] overflow-hidden">
+            <div className="mt-3 w-full md:h-[640px] h-[260px] overflow-hidden">
               <LeftSide />
             </div>
           </div>
@@ -83,7 +83,7 @@ const MainBody = () => {
             <div className="sticky top-0 z-10 bg-white pt-3 pb-2 border-b">
               <Navigations />
             </div>
-            <div className="flex flex-col gap-y-4 pt-4 px-2">
+            <div className="flex flex-col gap-y-4 pt-2 px-2">
               <Items />
               <Footer className="mt-4" />
             </div>

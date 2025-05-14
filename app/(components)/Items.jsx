@@ -9,7 +9,7 @@ import CryptoJS from "crypto-js";
 const Items = () => {
   const router = useRouter();
   const { activeTab, setActiveTab, loading, data } = useAppContext();
-  const [visibleItems, setVisibleItems] = useState(8);
+  const [visibleItems, setVisibleItems] = useState(4);
 
   // Set default tab and restore visibleItems on mount
   useEffect(() => {
@@ -26,7 +26,7 @@ const Items = () => {
     const scrollToId = sessionStorage.getItem("scrollToId");
     const scrollY = sessionStorage.getItem("scrollY");
 
-    console.log('scrollY', scrollY)
+ 
 
     setTimeout(() => {
 if (scrollToId) {
@@ -52,7 +52,7 @@ if (scrollToId) {
   }
 
   const handleShowMore = () => {
-    const newCount = visibleItems + 6;
+    const newCount = visibleItems + 8;
     setVisibleItems(newCount);
     sessionStorage.setItem("visibleItems", newCount.toString());
   };
