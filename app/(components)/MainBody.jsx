@@ -79,14 +79,11 @@ const MainBody = () => {
           </div>
 
           {/* Right Side - Fixed height container */}
-<div
-  className="w-full relative px-4 pt-7 pb-7 md:pl-10 h-[750px] md:h-[650px] overflow-y-auto bg-white"
-  style={{ contain: 'strict', overscrollBehavior: 'contain' }}
->
-  <div className="sticky -top-9 pt-6 z-10 bg-white">
+<div className="w-full relative px-4 pt-7 pb-7 md:pl-10 h-[750px] md:h-[650px] overflow-y-auto bg-white">
+  <div className="sticky pt-7 top-0  z-10 bg-white border-b">
     <Navigations />
   </div>
-  <div className="flex flex-col gap-y-4">
+  <div className="flex flex-col gap-y-4 pt-4">
     <Items />
     <Footer />
   </div>
