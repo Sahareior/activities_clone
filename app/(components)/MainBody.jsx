@@ -73,14 +73,14 @@ const MainBody = () => {
         <div className="flex flex-col md:flex-row w-full items-start">
           {/* Left Side - Fixed dimensions */}
           <div className="w-full md:w-[34vw] rounded-t-lg">
-            <div className="mt-3 w-full md:h-[640px] overflow-hidden">
+            <div className="mt-3 w-full h-[640px] overflow-hidden">
               <LeftSide />
             </div>
           </div>
 
           {/* Right Side - Fixed height container */}
-<div className="w-full relative px-4  md:pl-10 h-[750px] md:h-[600px] overflow-y-auto bg-white">
-  <div className="sticky top-0 pt-4 px-2 z-10 bg-white border-b">
+<div className="w-full relative px-4 pt-7 pb-7 md:pl-10 h-[750px] md:h-[650px] overflow-y-auto bg-white">
+  <div className="sticky top-0 pt-2 z-10 bg-white border-b">
     <Navigations />
   </div>
   <div className="flex flex-col gap-y-4 pt-4">
